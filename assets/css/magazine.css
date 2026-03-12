@@ -1,127 +1,85 @@
-/* --- ACMO Magazine Full CSS --- */
+<style>
+    .magazine-section { padding: 100px 20px 60px; min-height: 80vh; background: #f9f9f9; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: #333; }
+    
+    .magazine-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(300px, 400px)); /* কার্ডের সাইজ নিয়ন্ত্রন */
+        gap: 30px; 
+        justify-content: center;
+    }
 
-/* ১. সেকশন সেটআপ */
-.magazine-section { 
-    padding: 120px 20px 80px; 
-    min-height: 80vh; 
-    background-color: #f9f9f9; 
-}
+    /* কার্ডের নতুন ডিজাইন */
+    .mag-card { 
+        position: relative; 
+        background: #fff; 
+        border-radius: 12px; 
+        overflow: hidden; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        transition: 0.3s;
+        height: 500px; /* আপনার ইমেজের রেশিও অনুযায়ী হাইট কম-বেশি করতে পারেন */
+    }
 
-.container { 
-    max-width: 1100px; 
-    margin: 0 auto; 
-}
+    .mag-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
 
-/* ২. শিরোনাম ডিজাইন */
-.section-title { 
-    text-align: center; 
-    margin-bottom: 50px; 
-    font-size: 2.5rem; 
-    color: #333;
-    font-weight: 700;
-}
+    .mag-thumb { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        display: block;
+    }
 
-.section-title::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
-    background: #ff4757; /* ACMO এর ব্র্যান্ড কালার */
-    margin: 15px auto 0;
-    border-radius: 2px;
-}
+    /* ইমেজের ওপর কালো আবছা লেয়ার */
+    .mag-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3); /* ইমেজের ওপর হালকা অন্ধকার ভাব */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s;
+    }
 
-/* ৩. গ্রিড লেআউট */
-.magazine-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 30px; 
-    justify-content: center;
-}
+    .mag-card:hover .mag-overlay {
+        background: rgba(0, 0, 0, 0.5); /* হোভার করলে একটু বেশি ডার্ক হবে */
+    }
 
-/* ৪. ম্যাগাজিন কার্ড ডিজাইন (পুরো ছবিসহ) */
-.mag-card { 
-    position: relative; 
-    background: #fff; 
-    border-radius: 15px; 
-    overflow: hidden; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-    transition: all 0.4s ease;
-    height: 500px; /* কার্ডের উচ্চতা আপনার পছন্দমতো পরিবর্তন করতে পারেন */
-    cursor: pointer;
-}
+    /* মাঝখানের বাটন */
+    .btn-read-overlay { 
+        padding: 12px 25px; 
+        background: #ff4757; 
+        color: #fff; 
+        text-decoration: none; 
+        border-radius: 50px; 
+        font-size: 1rem;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: 0.3s;
+    }
 
-.mag-card:hover { 
-    transform: translateY(-10px); 
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
-}
+    .btn-read-overlay:hover { 
+        background: #fff; 
+        color: #ff4757; 
+        transform: scale(1.1);
+    }
+</style>
 
-/* কার্ডের ভেতরের ছবি */
-.mag-thumb { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: transform 0.6s ease;
-}
-
-.mag-card:hover .mag-thumb {
-    transform: scale(1.1); /* হোভার করলে ছবি সামান্য জুম হবে */
-}
-
-/* ৫. ইমেজ ওভারলে (ছবির ওপর কালো লেয়ার) */
-.mag-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* হালকা অন্ধকার আবরণ */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
-    padding: 20px;
-}
-
-.mag-card:hover .mag-overlay {
-    background: rgba(0, 0, 0, 0.6); /* হোভার করলে অন্ধকার বাড়বে */
-}
-
-/* ৬. ওভারলে এর ভেতরে টাইটেল */
-.overlay-title {
-    color: #ffffff;
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    font-weight: 700;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-    text-align: center;
-}
-
-/* ৭. মাঝখানের লাল বাটন ডিজাইন */
-.btn-read-overlay { 
-    padding: 12px 30px; 
-    background: #ff4757; 
-    color: #ffffff; 
-    text-decoration: none; 
-    border-radius: 50px; 
-    font-size: 1.1rem;
-    font-weight: 600;
-    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.btn-read-overlay:hover { 
-    background: transparent; 
-    color: #ffffff; 
-    border-color: #ffffff;
-    transform: scale(1.1); /* হোভার করলে বাটন একটু বড় হবে */
-}
-
-/* ৮. রেসপন্সিভ ডিজাইন (মোবাইল ভিউ) */
-@media (max-width: 768px) {
-    .section-title { font-size: 2rem; }
-    .mag-card { height: 450px; } /* মোবাইলে কার্ডের উচ্চতা একটু কমানো */
-    .overlay-title { font-size: 1.5rem; }
-}
+<section class="magazine-section">
+    <div class="container">
+        <h2 class="section-title">আমাদের ম্যাগাজিন ও পাবলিকেশন</h2>
+        
+        <div class="magazine-grid">
+            <div class="mag-card">
+                <img src="assets/images/2739.jpg" alt="Magazine" class="mag-thumb">
+                <div class="mag-overlay">
+                    <a href="2026.pdf" target="_blank" class="btn-read-overlay">ম্যাগাজিন পড়ুন</a>
+                </div>
+            </div>
+            
+            </div>
+    </div>
+</section>
