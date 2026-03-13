@@ -1,85 +1,113 @@
-<style>
-    .magazine-section { padding: 100px 20px 60px; min-height: 80vh; background: #f9f9f9; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-title { text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: #333; }
-    
-    .magazine-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(300px, 400px)); /* কার্ডের সাইজ নিয়ন্ত্রন */
-        gap: 30px; 
-        justify-content: center;
-    }
+/* --- ACMO Magazine Final CSS --- */
 
-    /* কার্ডের নতুন ডিজাইন */
-    .mag-card { 
-        position: relative; 
-        background: #fff; 
-        border-radius: 12px; 
-        overflow: hidden; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-        transition: 0.3s;
-        height: 500px; /* আপনার ইমেজের রেশিও অনুযায়ী হাইট কম-বেশি করতে পারেন */
-    }
+.magazine-section { 
+    padding: 120px 20px 80px; 
+    background-color: #f9f9f9; 
+    min-height: 100vh; 
+}
 
-    .mag-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+.container { 
+    max-width: 1100px; 
+    margin: 0 auto; 
+}
 
-    .mag-thumb { 
-        width: 100%; 
-        height: 100%; 
-        object-fit: cover; 
-        display: block;
-    }
+.section-title { 
+    text-align: center; 
+    margin-bottom: 50px; 
+    font-size: 2.5rem; 
+    color: #333;
+    font-weight: 700;
+}
 
-    /* ইমেজের ওপর কালো আবছা লেয়ার */
-    .mag-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3); /* ইমেজের ওপর হালকা অন্ধকার ভাব */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: 0.3s;
-    }
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #ff4757;
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
 
-    .mag-card:hover .mag-overlay {
-        background: rgba(0, 0, 0, 0.5); /* হোভার করলে একটু বেশি ডার্ক হবে */
-    }
+.magazine-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 30px; 
+    justify-content: center;
+}
 
-    /* মাঝখানের বাটন */
-    .btn-read-overlay { 
-        padding: 12px 25px; 
-        background: #ff4757; 
-        color: #fff; 
-        text-decoration: none; 
-        border-radius: 50px; 
-        font-size: 1rem;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        transition: 0.3s;
-    }
+/* ম্যাগাজিন কার্ড: যা পুরো ছবি ফ্রেমের ভেতরে দেখাবে */
+.mag-card { 
+    position: relative; 
+    background: #fff; /* ইমেজের ব্যাকগ্রাউন্ড সাদা */
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1); 
+    transition: all 0.4s ease;
+    aspect-ratio: 3 / 4; /* বইয়ের কভারের স্ট্যান্ডার্ড সাইজ */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .btn-read-overlay:hover { 
-        background: #fff; 
-        color: #ff4757; 
-        transform: scale(1.1);
-    }
-</style>
+.mag-card:hover { 
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+}
 
-<section class="magazine-section">
-    <div class="container">
-        <h2 class="section-title">আমাদের ম্যাগাজিন ও পাবলিকেশন</h2>
-        
-        <div class="magazine-grid">
-            <div class="mag-card">
-                <img src="assets/images/2739.jpg" alt="Magazine" class="mag-thumb">
-                <div class="mag-overlay">
-                    <a href="2026.pdf" target="_blank" class="btn-read-overlay">ম্যাগাজিন পড়ুন</a>
-                </div>
-            </div>
-            
-            </div>
-    </div>
-</section>
+/* ইমেজটি যাতে ফুল দেখায় তার জন্য সেটিংস */
+.mag-thumb { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; /* এর ফলে 2738.jpg ছবিটি কাটবে না, পুরোটা শো করবে */
+    transition: transform 0.5s ease;
+}
+
+.mag-card:hover .mag-thumb {
+    transform: scale(1.05);
+}
+
+/* মাঝখানে বাটন রাখার লেয়ার */
+.mag-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25); /* ছবির ওপর হালকা ছায়া */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.mag-card:hover .mag-overlay {
+    background: rgba(0, 0, 0, 0.4); /* হোভার করলে শ্যাডো বাড়বে */
+}
+
+/* ম্যাগাজিন পড়ুন বাটন (Center Alignment) */
+.btn-read-overlay { 
+    padding: 12px 30px; 
+    background: #ff4757; 
+    color: #ffffff; 
+    text-decoration: none; 
+    border-radius: 50px; 
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-read-overlay:hover { 
+    background: #ffffff; 
+    color: #ff4757; 
+    transform: scale(1.1);
+}
+
+/* মোবাইল ভিউর জন্য */
+@media (max-width: 768px) {
+    .section-title { font-size: 2rem; }
+    .mag-card { max-width: 350px; margin: 0 auto; }
+}
