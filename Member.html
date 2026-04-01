@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Members - ACMO</title>
-    <link rel="icon" href="assets/images/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/navbar.css">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -78,8 +77,8 @@
                     </div>
                     <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
                     <div class="social-links">
-                        <a href="https://facebook.com/acmou.18" target="_blank"><i class="fab fa-facebook"></i></a>
-                        <a href="mailto:acmou.18@gmail.com"><i class="fas fa-envelope"></i></a>
+                        <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
+                        <a href="mailto:acmou.18@gmail.com">📧</a>
                     </div>
                 </div>
                 <div class="footer-section">
@@ -93,49 +92,36 @@
                 </div>
                 <div class="footer-section">
                     <h3>Contact Info</h3>
-                    <p><i class="fas fa-envelope"></i> acmou.18@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +8801636-119044</p>
-                    <p><i class="fas fa-location-dot"></i> Bangladesh</p>
+                    <p>📧 acmou.18@gmail.com</p>
+                    <p>📱 +8801636-119044</p>
+                    <p>📍 Bangladesh</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ScriptySphere. All rights reserved. Made with ❤️ by <b> <a href="https://www.scriptysphere.org" style="color: white; text-decoration: none;">ScriptySphere.</a></b></p>
+                <p>&copy; 2026 Youth Inspiration Bangladesh | Designed by <b>Mamun</b></p>
             </div>
         </div>
     </footer>
 
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('show');
-        });
-
+    <script src="assets/js/main.js"></script> <script>
         function fetchMembers(file, btn) {
             document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
             btn.classList.add('active');
 
             const list = document.getElementById('memberList');
-            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1; padding: 50px;">সদস্যদের তথ্য লোড হচ্ছে...</p>`;
+            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">লোড হচ্ছে...</p>`;
 
             fetch(file)
-            .then(response => {
-                if (!response.ok) throw new Error('File not found');
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 list.innerHTML = "";
-                if(data.length === 0) {
-                    list.innerHTML = `<p style="text-align:center; grid-column: 1/-1; padding: 50px;">কোন সদস্য পাওয়া যায়নি।</p>`;
-                    return;
-                }
                 data.forEach(m => {
                     list.innerHTML += `
                         <div class="member-card">
                             <div class="id-header">ID NO: ${m.id}</div>
                             <div class="card-body">
                                 <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
-                                <img src="${m.photo}" alt="${m.name}" class="member-photo" onerror="this.src='assets/images/default-user.png'">
+                                <img src="${m.photo}" alt="${m.name}" class="member-photo" onerror="this.src='assets/images/logo.png'">
                                 <h3>${m.name}</h3>
                                 <p class="designation">${m.designation}</p>
                                 <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
@@ -148,7 +134,7 @@
                 });
             })
             .catch(err => {
-                list.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1; padding: 50px;">Error: ${file} ফাইলটি পাওয়া যায়নি।</p>`;
+                list.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1;">Error loading data.</p>`;
             });
         }
 
