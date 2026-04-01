@@ -38,71 +38,80 @@
         </div>
     </section>
 
-    <section class="filter-section">
-        <div class="category-wrapper">
-            <div class="cat-btn active" onclick="loadMembers('central', this)">
-                <i class="fas fa-shield-halved"></i> <span>Central Board</span>
-            </div>
-            <div class="cat-btn" onclick="loadMembers('divisional', this)">
-                <i class="fas fa-map-location-dot"></i> <span>Divisional</span>
-            </div>
-            <div class="cat-btn" onclick="loadMembers('district', this)">
-                <i class="fas fa-city"></i> <span>District</span>
-            </div>
-            <div class="cat-btn" onclick="loadMembers('upazila', this)">
-                <i class="fas fa-building"></i> <span>Upazila</span>
-            </div>
-            <div class="cat-btn" onclick="loadMembers('changemaker', this)">
-                <i class="fas fa-bolt"></i> <span>Changemaker</span>
-            </div>
+    <div class="board-icons">
+        <div class="icon-btn active" onclick="fetchMembers('central', this)">
+            <i class="fas fa-shield-halved"></i>
+            <p>Central Board</p>
         </div>
-    </section>
+        <div class="icon-btn" onclick="fetchMembers('divisional', this)">
+            <i class="fas fa-map-location-dot"></i>
+            <p>Divisional</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('district', this)">
+            <i class="fas fa-city"></i>
+            <p>District</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('upazila', this)">
+            <i class="fas fa-building"></i>
+            <p>Upazila</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('changemaker', this)">
+            <i class="fas fa-bolt"></i>
+            <p>Changemaker</p>
+        </div>
+    </div>
 
-    <section class="members-display">
-        <div id="memberList" class="member-grid">
-            </div>
-    </section>
+    <div id="memberList" class="member-grid">
+        </div>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <div class="footer-logo">
-                    <img src="assets/images/logo.png" alt="ACMO Logo">
-                    <span>ACMO</span>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.png" alt="ACMO Logo">
+                        <span>ACMO</span>
+                    </div>
+                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
+                        <a href="mailto:acmou.18@gmail.com">📧</a>
+                    </div>
                 </div>
-                <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="members.html">Members</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📧 acmou.18@gmail.com</p>
+                    <p>📱 +8801636-119044</p>
+                    <p>📍 Bangladesh</p>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="members.html">Members</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ACMO. All rights reserved. Made with ❤️ by <b><a href="https://www.scriptysphere.org" style="color: white; text-decoration: none;">ScriptySphere.</a></b></p>
             </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p>📧 acmou.18@gmail.com</p>
-                <p>📍 Bangladesh</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 ACMO | Designed by <b>Mamun</b></p>
         </div>
     </footer>
 
     <script>
-        async function loadMembers(category, btn) {
-            // Update Active Button
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        // Fetch Logic
+        async function fetchMembers(category, btn) {
+            // Active button change
+            document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
             if(btn) btn.classList.add('active');
 
             const list = document.getElementById('memberList');
-            list.innerHTML = `<p style="grid-column: 1/-1; text-align:center;">লোড হচ্ছে...</p>`;
+            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">লোড হচ্ছে...</p>`;
 
             try {
-                const res = await fetch(`${category}_members.json`);
-                const data = await res.json();
+                const response = await fetch(`${category}_members.json`);
+                const data = await response.json();
                 list.innerHTML = "";
                 data.forEach(m => {
                     list.innerHTML += `
@@ -110,7 +119,7 @@
                             <div class="id-header">ID NO: ${m.id}</div>
                             <div class="card-body">
                                 <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
-                                <img src="${m.photo}" class="member-photo" onerror="this.src='assets/images/logo.png'">
+                                <img src="${m.photo}" alt="${m.name}" class="member-photo" onerror="this.src='assets/images/logo.png'">
                                 <h3>${m.name}</h3>
                                 <p class="designation">${m.designation}</p>
                                 <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
@@ -120,12 +129,13 @@
                             </div>
                         </div>`;
                 });
-            } catch (e) {
-                list.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:red;">তথ্য পাওয়া যায়নি।</p>`;
+            } catch (error) {
+                list.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1;">ডাটা পাওয়া যায়নি!</p>`;
             }
         }
+
         // Default Load
-        window.onload = () => loadMembers('central');
+        window.onload = () => fetchMembers('central');
     </script>
 </body>
 </html>
