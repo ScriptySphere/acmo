@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Members - ACMO</title>
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/navbar.css">
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="style.css">
@@ -33,41 +34,43 @@
 
     <section class="page-hero">
         <div class="hero-overlay">
-            <h1>আমাদের সদস্যরা</h1>
-            <p>ACMO-র প্রতিটি সদস্য বাল্যবিবাহ প্রতিরোধে নিবেদিতপ্রাণ যোদ্ধা</p>
+            <div class="hero-content">
+                <h1>আমাদের সদস্যরা</h1>
+                <p>ACMO-র প্রতিটি সদস্য বাল্যবিবাহ প্রতিরোধে নিবেদিতপ্রাণ যোদ্ধা</p>
+            </div>
         </div>
     </section>
 
-    <section class="category-section">
-        <div class="board-icons-grid">
-            <div class="icon-card active" onclick="fetchMembers('central', this)">
+    <section class="category-grid-section">
+        <div class="board-icons-container">
+            <div class="icon-card active" onclick="fetchMembers('central_members.json', this)">
                 <i class="fas fa-shield-halved"></i>
                 <p>Central Board</p>
             </div>
-            <div class="icon-card" onclick="fetchMembers('divisional', this)">
+            <div class="icon-card" onclick="fetchMembers('divisional_members.json', this)">
                 <i class="fas fa-map-location-dot"></i>
                 <p>Divisional</p>
             </div>
-            <div class="icon-card" onclick="fetchMembers('district', this)">
+            <div class="icon-card" onclick="fetchMembers('district_members.json', this)">
                 <i class="fas fa-city"></i>
                 <p>District</p>
             </div>
-            <div class="icon-card" onclick="fetchMembers('upazila', this)">
+            <div class="icon-card" onclick="fetchMembers('upazila_members.json', this)">
                 <i class="fas fa-building"></i>
                 <p>Upazila</p>
             </div>
-            <div class="icon-card changemaker-btn" onclick="fetchMembers('changemaker', this)">
+            <div class="icon-card changemaker-card" onclick="fetchMembers('changemaker_members.json', this)">
                 <i class="fas fa-bolt"></i>
                 <p>Changemaker</p>
             </div>
         </div>
     </section>
 
-    <div id="memberList" class="member-grid">
+    <div id="memberList" class="member-grid-display">
         </div>
 
     <footer class="footer">
-        <div class="container">
+        <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
@@ -77,9 +80,12 @@
                     <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>📧 acmou.18@gmail.com</p>
-                    <p>📍 Bangladesh</p>
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="members.html">Members</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -89,17 +95,27 @@
     </footer>
 
     <script>
-        async function fetchMembers(category, btn) {
+        // Hamburger Menu Logic
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        hamburger.onclick = () => navMenu.classList.toggle('show');
+
+        // Member Fetching Logic
+        function fetchMembers(file, btn) {
             document.querySelectorAll('.icon-card').forEach(i => i.classList.remove('active'));
-            if(btn) btn.classList.add('active');
+            btn.classList.add('active');
 
             const list = document.getElementById('memberList');
-            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">লোড হচ্ছে...</p>`;
+            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1; padding: 50px;">লোড হচ্ছে...</p>`;
 
-            try {
-                const response = await fetch(`${category}_members.json`);
-                const data = await response.json();
+            fetch(file)
+            .then(res => res.json())
+            .then(data => {
                 list.innerHTML = "";
+                if(data.length === 0) {
+                    list.innerHTML = `<p style="grid-column: 1/-1; text-align:center;">কোন তথ্য পাওয়া যায়নি।</p>`;
+                    return;
+                }
                 data.forEach(m => {
                     list.innerHTML += `
                         <div class="member-card">
@@ -116,11 +132,13 @@
                             </div>
                         </div>`;
                 });
-            } catch (error) {
-                list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">তথ্য পাওয়া যায়নি।</p>`;
-            }
+            })
+            .catch(err => {
+                list.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:red;">সার্ভারে সমস্যা হচ্ছে।</p>`;
+            });
         }
-        window.onload = () => fetchMembers('central');
+
+        window.onload = () => fetchMembers('central_members.json', document.querySelector('.icon-card'));
     </script>
 </body>
 </html>
