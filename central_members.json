@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ACMO-C001",
+    "name": "Ariful Islam",
+    "designation": "Founder & President",
+    "bloodGroup": "B+",
+    "location": "Dhaka",
+    "photo": "assets/images/member1.jpg",
+    "fbLink": "https://facebook.com/username"
+  },
+  {
+    "id": "ACMO-C002",
+    "name": "Sultana Akter",
+    "designation": "General Secretary",
+    "bloodGroup": "O+",
+    "location": "Mymensingh",
+    "photo": "assets/images/member2.jpg",
+    "fbLink": "https://facebook.com/username"
+  }
+]
