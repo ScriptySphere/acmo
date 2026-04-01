@@ -26,150 +26,91 @@
                 <a href="contact.html" class="nav-link">Contact</a>
             </div>
             <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
             </div>
         </div>
     </nav>
 
     <section class="page-hero">
         <div class="hero-overlay">
-            <div class="container">
-                <h1>আমাদের সদস্যরা</h1>
-                <p>ACMO-র প্রতিটি সদস্য বাল্যবিবাহ প্রতিরোধে নিবেদিতপ্রাণ যোদ্ধা</p>
+            <h1>আমাদের সদস্যরা</h1>
+            <p>ACMO-র প্রতিটি সদস্য বাল্যবিবাহ প্রতিরোধে নিবেদিতপ্রাণ যোদ্ধা</p>
+        </div>
+    </section>
+
+    <section class="filter-section">
+        <div class="category-wrapper">
+            <div class="cat-btn active" onclick="loadMembers('central', this)">
+                <i class="fas fa-shield-halved"></i> <span>Central Board</span>
+            </div>
+            <div class="cat-btn" onclick="loadMembers('divisional', this)">
+                <i class="fas fa-map-location-dot"></i> <span>Divisional</span>
+            </div>
+            <div class="cat-btn" onclick="loadMembers('district', this)">
+                <i class="fas fa-city"></i> <span>District</span>
+            </div>
+            <div class="cat-btn" onclick="loadMembers('upazila', this)">
+                <i class="fas fa-building"></i> <span>Upazila</span>
+            </div>
+            <div class="cat-btn" onclick="loadMembers('changemaker', this)">
+                <i class="fas fa-bolt"></i> <span>Changemaker</span>
             </div>
         </div>
     </section>
 
-    <section class="members-accordion-container">
-        <div class="container">
-            
-            <div class="acc-item">
-                <div class="acc-header" onclick="toggleAccordion('central', this)">
-                    <span><i class="fas fa-shield-halved"></i> Central Board</span>
-                    <i class="fas fa-chevron-down arrow"></i>
-                </div>
-                <div id="central" class="acc-content">
-                    <div class="member-grid" id="centralList"></div>
-                </div>
+    <section class="members-display">
+        <div id="memberList" class="member-grid">
             </div>
-
-            <div class="acc-item">
-                <div class="acc-header" onclick="toggleAccordion('divisional', this)">
-                    <span><i class="fas fa-map-location-dot"></i> Divisional Board</span>
-                    <i class="fas fa-chevron-down arrow"></i>
-                </div>
-                <div id="divisional" class="acc-content">
-                    <div class="member-grid" id="divisionalList"></div>
-                </div>
-            </div>
-
-            <div class="acc-item">
-                <div class="acc-header" onclick="toggleAccordion('district', this)">
-                    <span><i class="fas fa-city"></i> District Board</span>
-                    <i class="fas fa-chevron-down arrow"></i>
-                </div>
-                <div id="district" class="acc-content">
-                    <div class="member-grid" id="districtList"></div>
-                </div>
-            </div>
-
-            <div class="acc-item">
-                <div class="acc-header" onclick="toggleAccordion('upazila', this)">
-                    <span><i class="fas fa-building"></i> Upazila Board</span>
-                    <i class="fas fa-chevron-down arrow"></i>
-                </div>
-                <div id="upazila" class="acc-content">
-                    <div class="member-grid" id="upazilaList"></div>
-                </div>
-            </div>
-
-        </div>
     </section>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="assets/images/logo.png" alt="ACMO Logo">
-                        <span>ACMO</span>
-                    </div>
-                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
-                    <div class="social-links">
-                        <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
-                        <a href="mailto:acmou.18@gmail.com">📧</a>
-                    </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="assets/images/logo.png" alt="ACMO Logo">
+                    <span>ACMO</span>
                 </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="members.html">Members</a></li>
-                        <li><a href="events.html">Events</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact Info</h3>
-                    <p>📧 acmou.18@gmail.com</p>
-                    <p>📱 +8801636-119044</p>
-                    <p>📍 Bangladesh</p>
-                </div>
+                <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 ACMO. All rights reserved. Made with ❤️ by <b><a href="https://www.scriptysphere.org" style="color: white; text-decoration: none;">ScriptySphere.</a></b></p>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="members.html">Members</a></li>
+                </ul>
             </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 acmou.18@gmail.com</p>
+                <p>📍 Bangladesh</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ACMO | Designed by <b>Mamun</b></p>
         </div>
     </footer>
 
     <script>
-        // Hamburger Menu
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
-        if(hamburger) {
-            hamburger.onclick = () => navMenu.classList.toggle('show');
-        }
+        async function loadMembers(category, btn) {
+            // Update Active Button
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
 
-        // Accordion Logic
-        function toggleAccordion(id, el) {
-            const content = document.getElementById(id);
-            const arrow = el.querySelector('.arrow');
-            const listContainer = document.getElementById(id + 'List');
+            const list = document.getElementById('memberList');
+            list.innerHTML = `<p style="grid-column: 1/-1; text-align:center;">লোড হচ্ছে...</p>`;
 
-            // Toggle Classes
-            content.classList.toggle('active');
-            el.classList.toggle('open-header');
-
-            // Rotate Arrow
-            if (content.classList.contains('active')) {
-                arrow.style.transform = "rotate(180deg)";
-                // Fetch Data only if container is empty
-                if (listContainer.innerHTML.trim() === "") {
-                    loadMembers(id);
-                }
-            } else {
-                arrow.style.transform = "rotate(0deg)";
-            }
-        }
-
-        async function loadMembers(category) {
-            const list = document.getElementById(category + 'List');
-            list.innerHTML = `<p style="text-align:center; width:100%; padding: 20px;">লোড হচ্ছে...</p>`;
-            
             try {
-                const response = await fetch(`${category}_members.json`);
-                const data = await response.json();
+                const res = await fetch(`${category}_members.json`);
+                const data = await res.json();
                 list.innerHTML = "";
-                
                 data.forEach(m => {
                     list.innerHTML += `
                         <div class="member-card">
                             <div class="id-header">ID NO: ${m.id}</div>
                             <div class="card-body">
                                 <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
-                                <img src="${m.photo}" alt="${m.name}" class="member-photo" onerror="this.src='assets/images/logo.png'">
+                                <img src="${m.photo}" class="member-photo" onerror="this.src='assets/images/logo.png'">
                                 <h3>${m.name}</h3>
                                 <p class="designation">${m.designation}</p>
                                 <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
@@ -179,10 +120,12 @@
                             </div>
                         </div>`;
                 });
-            } catch (error) {
-                list.innerHTML = `<p style="color:red; padding: 20px;">তথ্য পাওয়া যায়নি।</p>`;
+            } catch (e) {
+                list.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:red;">তথ্য পাওয়া যায়নি।</p>`;
             }
         }
+        // Default Load
+        window.onload = () => loadMembers('central');
     </script>
 </body>
 </html>
