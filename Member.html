@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members - ACMO</title>
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/images/logo.png" alt="ACMO Logo" class="logo">
+                <span class="logo-text">ACMO</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="members.html" class="nav-link active">Members</a>
+                <a href="events.html" class="nav-link">Events</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="hero-overlay">
+            <div class="container">
+                <h1>আমাদের সদস্যরা</h1>
+                <p>ACMO-র প্রতিটি সদস্য বাল্যবিবাহ প্রতিরোধে নিবেদিতপ্রাণ যোদ্ধা</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="board-icons">
+        <div class="icon-btn active" onclick="fetchMembers('central_members.json', this)">
+            <i class="fas fa-shield-halved"></i>
+            <p>Central Board</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('divisional_members.json', this)">
+            <i class="fas fa-map-location-dot"></i>
+            <p>Divisional</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('district_members.json', this)">
+            <i class="fas fa-city"></i>
+            <p>District</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('upazila_members.json', this)">
+            <i class="fas fa-building"></i>
+            <p>Upazila</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)">
+            <i class="fas fa-bolt"></i>
+            <p>Changemaker</p>
+        </div>
+    </div>
+
+    <div id="memberList" class="member-grid">
+        </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.png" alt="ACMO Logo">
+                        <span>ACMO</span>
+                    </div>
+                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
+                        <a href="mailto:acmou.18@gmail.com">📧</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="members.html">Members</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📧 acmou.18@gmail.com</p>
+                    <p>📱 +8801636-119044</p>
+                    <p>📍 Bangladesh</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Youth Inspiration Bangladesh | Designed by <b>Mamun</b></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script> <script>
+        function fetchMembers(file, btn) {
+            document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
+            btn.classList.add('active');
+
+            const list = document.getElementById('memberList');
+            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">লোড হচ্ছে...</p>`;
+
+            fetch(file)
+            .then(response => response.json())
+            .then(data => {
+                list.innerHTML = "";
+                data.forEach(m => {
+                    list.innerHTML += `
+                        <div class="member-card">
+                            <div class="id-header">ID NO: ${m.id}</div>
+                            <div class="card-body">
+                                <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
+                                <img src="${m.photo}" alt="${m.name}" class="member-photo" onerror="this.src='assets/images/logo.png'">
+                                <h3>${m.name}</h3>
+                                <p class="designation">${m.designation}</p>
+                                <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
+                                <div class="social-links-card">
+                                    <a href="${m.fbLink}" target="_blank"><i class="fab fa-facebook"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            })
+            .catch(err => {
+                list.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1;">Error loading data.</p>`;
+            });
+        }
+
+        window.onload = () => {
+            fetchMembers('central_members.json', document.querySelector('.icon-btn'));
+        };
+    </script>
+</body>
+</html>
