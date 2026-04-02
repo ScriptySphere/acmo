@@ -2,10 +2,19 @@
     {
         "id": "DIV-101",
         "name": "Md. Abdullah Al Mamun",
-        "designation": "Divisional Director ",
+        "designation": "Divisional Coordinator",
         "location": "Mymensingh",
         "bloodGroup": "O+",
         "photo": "assets/images/Mamun.jpg",
         "email": "2009.mamun@gmail.com"
+    },
+    {
+        "id": "DIV-102",
+        "name": "Mahir Ahnaf Protik",
+        "designation": "Media & It secretary",
+        "location": "Mymensingh",
+        "bloodGroup": "A+",
+        "photo": "assets/images/protik.jpg",
+        "email": "mahnafe3090@gmail.com"
     }
 ]
