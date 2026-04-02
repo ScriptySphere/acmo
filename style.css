@@ -14,9 +14,10 @@
 
 /* Category Filter Buttons */
 .board-icons {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
     margin: 40px auto;
     flex-wrap: wrap;
     max-width: 400px;
@@ -25,7 +26,7 @@
 
 .icon-btn {
     background: white;
-    padding: 15px;
+    padding: 12px 8px;
     border-radius: 15px;
     cursor: pointer;
     transition: 0.3s;
@@ -35,7 +36,7 @@
     min-width: 130px;
 }
 
-.icon-btn i { font-size: 28px; color: #006400; margin-bottom: 8px; }
+.icon-btn i { font-size: 18px; color: #006400; margin-bottom: 8px; }
 .icon-btn p { font-weight: bold; font-size: 14px; margin: 0; color: #333; }
 .icon-btn.active { border-color: #9ACD32; background: #f0fff0; transform: translateY(-5px); }
 
