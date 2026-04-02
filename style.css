@@ -2,7 +2,7 @@
 .page-hero {
     position: relative;
     background: linear-gradient(rgba(0, 77, 64, 0.8), rgba(0, 77, 64, 0.8)), url('assets/images/hero-bg.jpg');
-    background-size: cover;
+    background-size: 100%;
     background-position: center;
     height: 35vh;
     display: flex;
@@ -13,32 +13,57 @@
 }
 
 /* Category Filter Buttons */
+/* বাটনগুলোর কন্টেইনার */
 .board-icons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
-    gap: 10px;
-    margin: 40px auto;
-    flex-wrap: wrap;
-    max-width: 400px;
-    padding: 0 20px;
+    display: grid; /* Flex এর বদলে Grid ব্যবহার করা হয়েছে */
+    grid-template-columns: repeat(2, 1fr); /* এক লাইনে ২টি করে সমান কলাম */
+    gap: 10px; /* বাটনগুলোর মাঝখানের গ্যাপ */
+    padding: 15px;
+    width: 100%;
 }
 
+/* প্রতিটি বাটন */
 .icon-btn {
     background: white;
-    padding: 12px 8px;
-    border-radius: 15px;
+    padding: 12px 8px; /* প্যাডিং কমানো হয়েছে */
+    border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     border: 2px solid transparent;
-    min-width: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.icon-btn i { font-size: 18px; color: #006400; margin-bottom: 8px; }
-.icon-btn p { font-weight: bold; font-size: 14px; margin: 0; color: #333; }
-.icon-btn.active { border-color: #9ACD32; background: #f0fff0; transform: translateY(-5px); }
+/* আইকন আরও ছোট করা */
+.icon-btn i { 
+    font-size: 18px; /* আইকন সাইজ ১৮ পিক্সেল */
+    color: #006400; 
+    margin-bottom: 5px; 
+}
+
+/* বাটনের টেক্সট ছোট করা */
+.icon-btn p { 
+    font-weight: bold; 
+    font-size: 12px; /* টেক্সট সাইজ ১২ পিক্সেল */
+    margin: 0; 
+    color: #333; 
+}
+
+/* ল্যাপটপ বা বড় স্ক্রিনের জন্য (বড় স্ক্রিনে ৫টিই এক লাইনে থাকবে) */
+@media (min-width: 768px) {
+    .board-icons {
+        display: flex;
+        justify-content: center;
+        grid-template-columns: none;
+    }
+    .icon-btn {
+        min-width: 130px;
+    }
+}
 
 /* Member Grid Layout */
 .member-grid {
