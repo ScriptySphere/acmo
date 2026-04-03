@@ -1,3 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    overflow-x: hidden; /* ডানে যেন স্ক্রলবার না আসে */
+}
 /* --- ACMO Magazine Final CSS --- */
 
 .magazine-section { 
