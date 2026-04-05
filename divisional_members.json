@@ -17,16 +17,16 @@
         "photo": "assets/images/protik.jpg",
         "email": "mahnafe3090@gmail.com"
     },
-     {
+    {
         "id": "DIV-101",
-        "name": "  ",
+        "name": "Mahin Alam Amman",
         "designation": "Divisional Director ",
         "location": "Dhaka",
-        "bloodGroup": "+",
+        "bloodGroup": "AB+",
         "photo": "assets/images/dh01.jpg",
-        "email": "sbparthib10112006@gmail.com"
+        "email": "mahinamman.1200@gmail.com"
     },
-     {
+    {
         "id": "DIV-102",
         "name": "Nazia Tasnim",
         "designation": "Assistant Divisional Director ",
@@ -35,7 +35,7 @@
         "photo": "assets/images/dh02.jpg",
         "email": "tasnimnazia20@gmail.com"
     },
-     {
+    {
         "id": "DIV-103",
         "name": "",
         "designation": "IT & Media Secretary ",
@@ -44,7 +44,7 @@
         "photo": "assets/images/dh03.jpg",
         "email": "onnezaman8@gmail.com"
     },
-     {
+    {
         "id": "DIV-101",
         "name": "",
         "designation": "Divisional Director ",
@@ -53,7 +53,7 @@
         "photo": "assets/images/dh01.jpg",
         "email": "sbparthib10112006@gmail.com"
     },
-     {
+    {
         "id": "DIV-102",
         "name": "Jamiul Hasan Araf",
         "designation": "Assistant Divisional Director ",
@@ -62,7 +62,7 @@
         "photo": "assets/images/syh02.jpg",
         "email": "jamiulhasanaraf730@gmail.com"
     },
-     {
+    {
         "id": "DIV-103",
         "name": "Muntasir Mahmud",
         "designation": "IT & Media Secretary ",
@@ -71,7 +71,7 @@
         "photo": "assets/images/syh03.jpg",
         "email": "muntasirmun2008@gmail.com"
     },
-     {
+    {
         "id": "DIV-101",
         "name": "Ayesha Siddika Nodee",
         "designation": "Divisional Director ",
@@ -80,7 +80,7 @@
         "photo": "assets/images/ch01.jpg",
         "email": "ara920410@gmail.com"
     },
-     {
+    {
         "id": "DIV-102",
         "name": " ",
         "designation": "Assistant Divisional Director ",
@@ -89,7 +89,7 @@
         "photo": "assets/images/ch02.jpg",
         "email": "mushfiq752@gmail.com"
     },
-     {
+    {
         "id": "DIV-103",
         "name": "Ayan Basu",
         "designation": "IT & Media Secretary ",
@@ -98,8 +98,7 @@
         "photo": "assets/images/ch03.jpg",
         "email": "ayanbasuab@gmail.com"
     },
-
-     {
+    {
         "id": "DIV-101",
         "name": "MD. Ebnul Hossen Rahat",
         "designation": "Divisional Director ",
@@ -108,7 +107,7 @@
         "photo": "assets/images/kh01.jpg",
         "email": "ebnulhossen44@gmail.com"
     },
-     {
+    {
         "id": "DIV-102",
         "name": "M",
         "designation": "Assistant Divisional Director ",
@@ -117,7 +116,7 @@
         "photo": "assets/images/kh02.jpg",
         "email": "mushfiq752@gmail.com"
     },
-     {
+    {
         "id": "DIV-103",
         "name": "San",
         "designation": "IT & Media Secretary ",
@@ -126,7 +125,7 @@
         "photo": "assets/images/kh03.jpg",
         "email": "onnezaman8@gmail.com"
     },
-     {
+    {
         "id": "DIV-101",
         "name": "Shaswato Biswas",
         "designation": "Divisional Director ",
@@ -135,7 +134,7 @@
         "photo": "assets/images/kh01.jpg",
         "email": "sbparthib10112006@gmail.com"
     },
-     {
+    {
         "id": "DIV-102",
         "name": "Mushfiq ur Rahman",
         "designation": "Assistant Divisional Director ",
@@ -144,7 +143,7 @@
         "photo": "assets/images/kh02.jpg",
         "email": "mushfiq752@gmail.com"
     },
-     {
+    {
         "id": "DIV-103",
         "name": "Sanjana Zaman",
         "designation": "IT & Media Secretary ",
@@ -153,7 +152,7 @@
         "photo": "assets/images/kh03.jpg",
         "email": "onnezaman8@gmail.com"
     },
-       {
+    {
         "id": "DIV-101",
         "name": "MD. Mahmud Hassan Sorkar",
         "designation": "Divisional Director ",
@@ -162,22 +161,22 @@
         "photo": "assets/images/dh01.jpg",
         "email": "mahmudhassansorker777@gmail.com"
     },
-     {
+    {
         "id": "DIV-102",
-        "name": " ",
+        "name": "Jarif Al Joy",
         "designation": "Assistant Divisional Director ",
         "location": "Rangpur",
-        "bloodGroup": "B+",
+        "bloodGroup": "AB+",
         "photo": "assets/images/dh02.jpg",
-        "email": "tasnimnazia20@gmail.com"
+        "email": "joyjarif249@gmail.com"
     },
-     {
+    {
         "id": "DIV-103",
-        "name": "",
+        "name": "Muzahid islam joy",
         "designation": "IT & Media Secretary ",
         "location": "Rangpur",
-        "bloodGroup": "B+",
+        "bloodGroup": "O+",
         "photo": "assets/images/dh03.jpg",
-        "email": "onnezaman8@gmail.com"
+        "email": "mujahidislamjoy7@gmail.com"
     }
 ]
