@@ -4,254 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Members - ACMO</title>
-    <link rel="stylesheet" href="assets/css/navbar.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        /* Modal Base Styling */
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 2000; 
-            left: 0; top: 0; width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: #fff;
-            margin: 2% auto;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: modalSlide 0.4s ease-out;
-        }
-        @keyframes modalSlide {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .close-btn {
-            position: absolute;
-            right: 15px;
-            top: 10px;
-            font-size: 28px;
-            color: #fff;
-            cursor: pointer;
-            z-index: 10;
-        }
-        /* Modal Body Styling */
-        .modal-header-bg {
-            background: linear-gradient(135deg, #007bff, #00c6ff);
-            height: 100px;
-            width: 100%;
-        }
-        .modal-body {
-            padding: 20px;
-            text-align: center;
-            margin-top: -60px;
-        }
-        .modal-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 5px solid #fff;
-            object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-            background: #28a745;
-            color: #fff;
-            margin-top: 10px;
-        }
-        .info-section {
-            text-align: left;
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-        .info-item label {
-            display: block;
-            font-size: 11px;
-            color: #888;
-            text-transform: uppercase;
-        }
-        .info-item span {
-            font-size: 14px;
-            color: #333;
-            font-weight: 600;
-        }
-        .bio-box {
-            text-align: left;
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-        .member-card { cursor: pointer; transition: transform 0.2s; }
-        .member-card:hover { transform: scale(1.02); }
+        /* Existing Styles + New Card Buttons */
+        :root { --primary: #007bff; --secondary: #6c757d; }
+        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; }
+        .member-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; border: 1px solid #eee; }
+        .card-actions { display: flex; border-top: 1px solid #eee; }
+        .btn-action { flex: 1; padding: 12px; border: none; cursor: pointer; background: #fff; font-size: 14px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-details { color: var(--primary); border-right: 1px solid #eee; }
+        .btn-share { color: var(--secondary); }
+        .btn-action:hover { background: #f8f9fa; }
+
+        /* Modal Enhancements */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); overflow-y: auto; }
+        .modal-content { background: #fff; margin: 20px auto; border-radius: 20px; width: 90%; max-width: 450px; position: relative; }
+        .id-card-view { padding: 20px; text-align: center; } /* This part will be captured as image */
+        
+        .modal-footer { padding: 15px; display: flex; gap: 10px; justify-content: center; background: #f1f1f1; border-radius: 0 0 20px 20px; }
+        .btn-download { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        
+        /* Share Modal */
+        #shareSection { text-align: center; padding: 20px; display: none; border-top: 1px dotted #ccc; }
+        #qrcode { display: flex; justify-content: center; margin: 15px 0; }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="assets/images/logo.png" alt="ACMO Logo" class="logo">
-                <span class="logo-text">ACMO</span>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="members.html" class="nav-link active">Members</a>
-                <a href="events.html" class="nav-link">Events</a>
-                <a href="gallery.html" class="nav-link">Gallery</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <section class="page-hero">
-        <div class="hero-overlay">
-            <div class="container">
-                <h1>আমাদের সদস্যরা</h1>
-                <p>ACMO-র প্রতিটি সদস্য বাল্যবিবাহ প্রতিরোধে নিবেদিতপ্রাণ যোদ্ধা</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="board-icons">
-        <div class="icon-btn active" onclick="fetchMembers('central_members.json', this)">
-            <i class="fas fa-shield-halved"></i>
-            <p>Central Board</p>
-        </div>
-        <div class="icon-btn" onclick="fetchMembers('divisional_members.json', this)">
-            <i class="fas fa-map-location-dot"></i>
-            <p>Divisional</p>
-        </div>
-        <div class="icon-btn" onclick="fetchMembers('district_members.json', this)">
-            <i class="fas fa-city"></i>
-            <p>District</p>
-        </div>
-        <div class="icon-btn" onclick="fetchMembers('upazila_members.json', this)">
-            <i class="fas fa-building"></i>
-            <p>Upazila</p>
-        </div>
-        <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)">
-            <i class="fas fa-bolt"></i>
-            <p>Changemaker</p>
-        </div>
-    </div>
 
     <div id="memberList" class="member-grid"></div>
 
     <div id="memberModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-header-bg"></div>
-            <div id="modalData" class="modal-body">
+            <span style="position:absolute; right:15px; top:10px; font-size:30px; cursor:pointer; z-index:100;" onclick="closeModal()">&times;</span>
+            
+            <div id="captureArea" class="id-card-view">
+                <div style="background: var(--primary); height:80px; margin:-20px -20px 40px -20px; border-radius:20px 20px 0 0;"></div>
+                <img id="m-photo" src="" style="width:120px; height:120px; border-radius:50%; border:5px solid #fff; margin-top:-80px; object-fit:cover;">
+                <h2 id="m-name" style="margin:10px 0 5px 0;"></h2>
+                <p id="m-desig" style="color:var(--primary); font-weight:bold;"></p>
+                <hr>
+                <div style="text-align:left; font-size:13px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div><strong>ID:</strong> <span id="m-id"></span></div>
+                    <div><strong>Blood:</strong> <span id="m-blood"></span></div>
+                    <div style="grid-column: span 2;"><strong>Bio:</strong> <span id="m-bio"></span></div>
                 </div>
+                <div id="shareSection">
+                    <p style="font-size:11px; color:#666;">Scan to verify member</p>
+                    <div id="qrcode"></div>
+                    <small id="shareLink" style="word-break: break-all; color: var(--primary);"></small>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-download" onclick="downloadID()"><i class="fas fa-download"></i> Save Image</button>
+            </div>
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2026 All Rights Reserved | Designed by <b>Mamun</b></p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/js/main.js"></script>
     <script>
-        let currentMembers = [];
+        let membersData = [];
 
-        function fetchMembers(file, btn) {
-            document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
-            btn.classList.add('active');
-
-            const list = document.getElementById('memberList');
-            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">লোড হচ্ছে...</p>`;
-
-            fetch(file)
-            .then(response => response.json())
-            .then(data => {
-                currentMembers = data;
-                list.innerHTML = "";
-                data.forEach((m, index) => {
-                    list.innerHTML += `
-                        <div class="member-card" onclick="openModal(${index})">
-                            <div class="id-header">ID NO: ${m.id}</div>
-                            <div class="card-body">
-                                <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
-                                <img src="${m.photo}" alt="${m.name}" class="member-photo" onerror="this.src='assets/images/logo.png'">
-                                <h3>${m.name}</h3>
-                                <p class="designation">${m.designation}</p>
-                                <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
-                            </div>
+        function fetchMembers(file) {
+            fetch(file).then(res => res.json()).then(data => {
+                membersData = data;
+                const list = document.getElementById('memberList');
+                list.innerHTML = data.map((m, index) => `
+                    <div class="member-card">
+                        <div style="padding:20px; text-align:center;">
+                            <img src="${m.photo}" style="width:100px; height:100px; border-radius:50%; object-fit:cover;">
+                            <h3>${m.name}</h3>
+                            <p style="font-size:14px; color:#777;">${m.designation}</p>
                         </div>
-                    `;
-                });
-            })
-            .catch(err => {
-                list.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1;">Error loading data.</p>`;
+                        <div class="card-actions">
+                            <button class="btn-action btn-details" onclick="openDetails(${index})">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </button>
+                            <button class="btn-action btn-share" onclick="shareMember(${index})">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
             });
         }
 
-        function openModal(index) {
-            const m = currentMembers[index];
-            const modalData = document.getElementById('modalData');
+        function openDetails(index, showShare = false) {
+            const m = membersData[index];
+            document.getElementById('m-photo').src = m.photo;
+            document.getElementById('m-name').innerText = m.name;
+            document.getElementById('m-desig').innerText = m.designation;
+            document.getElementById('m-id').innerText = m.id;
+            document.getElementById('m-blood').innerText = m.bloodGroup;
+            document.getElementById('m-bio').innerText = m.bio || 'ACMO Member';
             
-            modalData.innerHTML = `
-                <img src="${m.photo}" class="modal-photo" onerror="this.src='assets/images/logo.png'">
-                <h2 style="margin: 10px 0 5px 0;">${m.name}</h2>
-                <p style="color:#007bff; font-weight:bold; margin:0;">${m.designation}</p>
-                <div class="status-badge">${m.status || 'Active Member'}</div>
-                
-                <div class="info-section">
-                    <div class="info-item"><label>সংগঠনের আইডি</label><span>${m.id}</span></div>
-                    <div class="info-item"><label>রক্তের গ্রুপ</label><span>${m.bloodGroup}</span></div>
-                    <div class="info-item"><label>পেশাগত পরিচয়</label><span>${m.profession || 'N/A'}</span></div>
-                    <div class="info-item"><label>যোগদানের তারিখ</label><span>${m.joiningDate || 'N/A'}</span></div>
-                    <div class="info-item"><label>ফোন</label><span>${m.phone || 'N/A'}</span></div>
-                    <div class="info-item"><label>ইমেইল</label><span>${m.email || 'N/A'}</span></div>
-                    <div class="info-item" style="grid-column: span 2;"><label>স্কিল</label><span>${m.skill || 'N/A'}</span></div>
-                </div>
+            // Handle Share Section visibility
+            const shareSec = document.getElementById('shareSection');
+            if(showShare) {
+                shareSec.style.display = 'block';
+                generateQR(m.id);
+            } else {
+                shareSec.style.display = 'none';
+            }
 
-                <div class="bio-box">
-                    <strong>সংক্ষিপ্ত বায়ো:</strong><br>
-                    ${m.bio || 'সদস্য সম্পর্কে কোনো তথ্য নেই।'}
-                    <br><br>
-                    <strong>Achievement:</strong> ${m.achievement || 'N/A'}
-                </div>
-            `;
-            document.getElementById('memberModal').style.display = "block";
+            document.getElementById('memberModal').style.display = 'block';
+        }
+
+        function shareMember(index) {
+            openDetails(index, true);
+        }
+
+        function generateQR(memberId) {
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = "";
+            const uniqueUrl = window.location.origin + window.location.pathname + "?id=" + memberId;
+            document.getElementById('shareLink').innerText = uniqueUrl;
+            
+            new QRCode(qrContainer, {
+                text: uniqueUrl,
+                width: 100,
+                height: 100
+            });
+        }
+
+        function downloadID() {
+            const area = document.getElementById('captureArea');
+            html2canvas(area, { useCORS: true }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'ACMO-Member-Card.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
         }
 
         function closeModal() {
-            document.getElementById('memberModal').style.display = "none";
+            document.getElementById('memberModal').style.display = 'none';
         }
 
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('memberModal')) {
-                closeModal();
-            }
-        }
-
-        window.onload = () => {
-            fetchMembers('central_members.json', document.querySelector('.icon-btn'));
-        };
+        window.onload = () => fetchMembers('central_members.json');
     </script>
 </body>
 </html>
