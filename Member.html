@@ -8,63 +8,181 @@
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
     <style>
-        /* মডাল এবং বাটনের ডিজাইন */
+        /* Modal Base Styling - Full Page Look */
         .modal {
-            display: none; position: fixed; z-index: 2000; 
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
             left: 0; top: 0; width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            background-color: #fff; /* White background for page look */
             overflow-y: auto;
         }
         .modal-content {
-            background: #fff; margin: 2% auto; border-radius: 20px;
-            width: 90%; max-width: 450px; position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: modalSlide 0.4s ease-out;
+            background: #fff;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            min-height: 100vh;
+            box-shadow: none;
+            animation: fadeIn 0.3s ease-in;
         }
-        @keyframes modalSlide { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 28px; color: #fff; cursor: pointer; z-index: 100; }
-
-        /* কার্ডের নিচের বাটন */
-        .card-footer-btns { display: flex; border-top: 1px solid #eee; }
-        .btn-card {
-            flex: 1; padding: 12px; border: none; background: #fff;
-            cursor: pointer; font-size: 13px; font-weight: 600;
-            display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.3s;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
-        .btn-view { color: #007bff; border-right: 1px solid #eee; }
-        .btn-share-main { color: #666; }
-        .btn-card:hover { background: #f8f9fa; }
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            color: #fff;
+            background: rgba(0,0,0,0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+        }
 
-        /* আইডি কার্ড ভিউ */
-        .id-card-capture { padding: 0 0 20px 0; text-align: center; }
-        .modal-header-bg { background: linear-gradient(135deg, #007bff, #00c6ff); height: 100px; width: 100%; }
-        .modal-body-content { padding: 0 20px; margin-top: -60px; }
-        .modal-photo { width: 120px; height: 120px; border-radius: 50%; border: 5px solid #fff; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .info-grid { text-align: left; margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-top: 1px solid #eee; padding-top: 15px; }
-        .info-item label { display: block; font-size: 10px; color: #888; text-transform: uppercase; }
-        .info-item span { font-size: 13px; color: #333; font-weight: 600; }
-        
-        #shareArea { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; display: none; }
-        #qrcode { display: flex; justify-content: center; margin: 10px 0; }
-        .modal-footer-btns { padding: 15px; background: #f8f9fa; border-radius: 0 0 20px 20px; text-align: center; }
-        .btn-download { background: #28a745; color: white; border: none; padding: 10px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; }
+        /* Modal Body Styling */
+        .modal-header-bg {
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            height: 180px;
+            width: 100%;
+        }
+        .modal-body {
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: -80px;
+        }
+        .modal-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            object-fit: cover;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Card Action Buttons */
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        .btn-view {
+            flex: 1;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-share {
+            background: #f0f2f5;
+            color: #333;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* ID Card Download Button */
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #28a745;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+        }
+
+        /* Share Modal (Small Popup) */
+        #shareModal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .share-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            width: 300px;
+        }
+        #qrcode {
+            margin: 15px auto;
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="assets/images/logo.png" alt="ACMO Logo" class="logo">
+                <span class="logo-text">ACMO</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="members.html" class="nav-link active">Members</a>
+                <a href="events.html" class="nav-link">Events</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="hero-overlay">
+            <div class="container">
+                <h1>আমাদের সদস্যরা</h1>
+                <p>ACMO-র প্রতিটি সদস্য বাল্যবিবাহ প্রতিরোধে নিবেদিতপ্রাণ যোদ্ধা</p>
+            </div>
+        </div>
+    </section>
 
     <div class="board-icons">
         <div class="icon-btn active" onclick="fetchMembers('central_members.json', this)">
-            <i class="fas fa-shield-halved"></i><p>Central Board</p>
+            <i class="fas fa-shield-halved"></i>
+            <p>Central Board</p>
         </div>
         <div class="icon-btn" onclick="fetchMembers('divisional_members.json', this)">
-            <i class="fas fa-map-location-dot"></i><p>Divisional</p>
+            <i class="fas fa-map-location-dot"></i>
+            <p>Divisional</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('district_members.json', this)">
+            <i class="fas fa-city"></i>
+            <p>District</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('upazila_members.json', this)">
+            <i class="fas fa-building"></i>
+            <p>Upazila</p>
         </div>
         <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)">
-            <i class="fas fa-bolt"></i><p>Changemaker</p>
+            <i class="fas fa-bolt"></i>
+            <p>Changemaker</p>
         </div>
     </div>
 
@@ -73,67 +191,59 @@
     <div id="memberModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="captureArea" class="id-card-capture">
-                <div class="modal-header-bg"></div>
-                <div class="modal-body-content">
-                    <img id="m-photo" src="" class="modal-photo" onerror="this.src='assets/images/logo.png'">
-                    <h2 id="m-name" style="margin: 10px 0 5px 0; color: #333;"></h2>
-                    <p id="m-desig" style="color: #007bff; font-weight: bold; margin: 0;"></p>
-                    <div class="info-grid">
-                        <div class="info-item"><label>সংগঠনের আইডি</label><span id="m-id"></span></div>
-                        <div class="info-item"><label>রক্তের গ্রুপ</label><span id="m-blood"></span></div>
-                        <div class="info-item"><label>পেশা</label><span id="m-prof"></span></div>
-                        <div class="info-item"><label>যোগদান</label><span id="m-join"></span></div>
-                    </div>
-                    <div id="shareArea">
-                        <div id="qrcode"></div>
-                        <p id="shareLink" style="font-size: 10px; color: #007bff; word-break: break-all;"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer-btns">
-                <button class="btn-download" onclick="downloadCard()"><i class="fas fa-file-image"></i> Download ID Card</button>
-            </div>
+            <div class="modal-header-bg"></div>
+            <div id="modalData" class="modal-body"></div>
         </div>
     </div>
 
-    <script>
-        let allData = [];
+    <div id="shareModal">
+        <div class="share-content">
+            <h3>Share Profile</h3>
+            <div id="qrcode"></div>
+            <p id="shareLinkText" style="font-size: 11px; color: #666; word-break: break-all;"></p>
+            <button onclick="closeShare()" class="btn-view" style="margin-top: 10px;">Close</button>
+        </div>
+    </div>
 
-        // এই ফাংশনটি এখন যেকোনো বাটনে ক্লিক করলেই কাজ করবে
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 All Rights Reserved | Designed by <b>Mamun</b></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        let currentMembers = [];
+
         function fetchMembers(file, btn) {
-            // বাটন একটিভ করা
-            if(btn) {
-                document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
-                btn.classList.add('active');
-            }
+            document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
+            btn.classList.add('active');
 
             const list = document.getElementById('memberList');
             list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">লোড হচ্ছে...</p>`;
 
             fetch(file)
-            .then(res => res.json())
+            .then(response => response.json())
             .then(data => {
-                allData = data;
+                currentMembers = data;
                 list.innerHTML = "";
                 data.forEach((m, index) => {
-                    // প্রতিটি মেম্বারের জন্য বাটনসহ কার্ড জেনারেট হচ্ছে
                     list.innerHTML += `
                         <div class="member-card">
                             <div class="id-header">ID NO: ${m.id}</div>
                             <div class="card-body">
                                 <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
-                                <img src="${m.photo}" class="member-photo" onerror="this.src='assets/images/logo.png'">
+                                <img src="${m.photo}" alt="${m.name}" class="member-photo" onerror="this.src='assets/images/logo.png'">
                                 <h3>${m.name}</h3>
                                 <p class="designation">${m.designation}</p>
                                 <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
                             </div>
-                            <div class="card-footer-btns">
-                                <button class="btn-card btn-view" onclick="openProfile(${index}, false)">
-                                    <i class="fas fa-user-circle"></i> Details
-                                </button>
-                                <button class="btn-card btn-share-main" onclick="openProfile(${index}, true)">
-                                    <i class="fas fa-share-nodes"></i> Share
+                            <div class="card-actions">
+                                <button class="btn-view" onclick="openModal(${index})">View Details</button>
+                                <button class="btn-share" onclick="openShare('${m.id}')">
+                                    <i class="fas fa-share-alt"></i>
                                 </button>
                             </div>
                         </div>
@@ -145,49 +255,70 @@
             });
         }
 
-        function openProfile(index, isSharing) {
-            const m = allData[index];
-            document.getElementById('m-photo').src = m.photo;
-            document.getElementById('m-name').innerText = m.name;
-            document.getElementById('m-desig').innerText = m.designation;
-            document.getElementById('m-id').innerText = m.id;
-            document.getElementById('m-blood').innerText = m.bloodGroup;
-            document.getElementById('m-prof').innerText = m.profession || 'N/A';
-            document.getElementById('m-join').innerText = m.joiningDate || 'N/A';
+        function openModal(index) {
+            const m = currentMembers[index];
+            const modalData = document.getElementById('modalData');
+            
+            modalData.innerHTML = `
+                <img src="${m.photo}" class="modal-photo" onerror="this.src='assets/images/logo.png'">
+                <h2 style="margin: 15px 0 5px 0; font-size: 24px;">${m.name}</h2>
+                <p style="color:#007bff; font-weight:bold; font-size: 16px; margin:0;">${m.designation}</p>
+                <div class="status-badge">${m.status || 'Active Member'}</div>
+                
+                <div class="info-section">
+                    <div class="info-item"><label>সংগঠনের আইডি</label><span>${m.id}</span></div>
+                    <div class="info-item"><label>রক্তের গ্রুপ</label><span>${m.bloodGroup}</span></div>
+                    <div class="info-item"><label>পেশাগত পরিচয়</label><span>${m.profession || 'N/A'}</span></div>
+                    <div class="info-item"><label>যোগদানের তারিখ</label><span>${m.joiningDate || 'N/A'}</span></div>
+                    <div class="info-item"><label>ফোন</label><span>${m.phone || 'N/A'}</span></div>
+                    <div class="info-item"><label>ইমেইল</label><span>${m.email || 'N/A'}</span></div>
+                </div>
 
-            const shareSec = document.getElementById('shareArea');
-            if(isSharing) {
-                shareSec.style.display = 'block';
-                generateQR(m.id);
-            } else {
-                shareSec.style.display = 'none';
-            }
-            document.getElementById('memberModal').style.display = 'block';
+                <div class="bio-box">
+                    <strong>সংক্ষিপ্ত বায়ো:</strong><br>
+                    ${m.bio || 'সদস্য সম্পর্কে কোনো তথ্য নেই।'}
+                </div>
+
+                <a href="#" class="download-btn" onclick="alert('Generating ID Card for ID: ${m.id}')">
+                    <i class="fas fa-download"></i> Download ID Card
+                </a>
+            `;
+            document.getElementById('memberModal').style.display = "block";
+            document.body.style.overflow = "hidden"; // Disable scroll
         }
 
-        function generateQR(id) {
-            const qrBox = document.getElementById('qrcode');
-            qrBox.innerHTML = "";
-            const profileLink = window.location.origin + window.location.pathname + "?id=" + id;
-            document.getElementById('shareLink').innerText = profileLink;
-            new QRCode(qrBox, { text: profileLink, width: 100, height: 100 });
+        function closeModal() {
+            document.getElementById('memberModal').style.display = "none";
+            document.body.style.overflow = "auto";
         }
 
-        function downloadCard() {
-            const area = document.getElementById('captureArea');
-            html2canvas(area, { useCORS: true, scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `ACMO_Card.png`;
-                link.href = canvas.toDataURL("image/png");
-                link.click();
+        // Share Logic
+        function openShare(id) {
+            const shareUrl = window.location.href.split('?')[0] + "?id=" + id;
+            document.getElementById('shareModal').style.display = "flex";
+            document.getElementById('shareLinkText').innerText = shareUrl;
+            
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, {
+                text: shareUrl,
+                width: 128,
+                height: 128
             });
         }
 
-        function closeModal() { document.getElementById('memberModal').style.display = 'none'; }
-        window.onclick = (e) => { if(e.target == document.getElementById('memberModal')) closeModal(); }
+        function closeShare() {
+            document.getElementById('shareModal').style.display = "none";
+        }
 
-        // পেজ লোড হলে ডিফল্টভাবে সেন্ট্রাল মেম্বার দেখাবে
-        window.onload = () => fetchMembers('central_members.json', document.querySelector('.icon-btn'));
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('memberModal')) closeModal();
+            if (event.target == document.getElementById('shareModal')) closeShare();
+        }
+
+        window.onload = () => {
+            fetchMembers('central_members.json', document.querySelector('.icon-btn'));
+        };
     </script>
 </body>
 </html>
