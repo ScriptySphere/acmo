@@ -8,6 +8,101 @@
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Modal Base Styling */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0; top: 0; width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: #fff;
+            margin: 2% auto;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: modalSlide 0.4s ease-out;
+        }
+        @keyframes modalSlide {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            color: #fff;
+            cursor: pointer;
+            z-index: 10;
+        }
+        /* Modal Body Styling */
+        .modal-header-bg {
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            height: 100px;
+            width: 100%;
+        }
+        .modal-body {
+            padding: 20px;
+            text-align: center;
+            margin-top: -60px;
+        }
+        .modal-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #28a745;
+            color: #fff;
+            margin-top: 10px;
+        }
+        .info-section {
+            text-align: left;
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        .info-item label {
+            display: block;
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+        }
+        .info-item span {
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+        .bio-box {
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .member-card { cursor: pointer; transition: transform 0.2s; }
+        .member-card:hover { transform: scale(1.02); }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -23,11 +118,6 @@
                 <a href="events.html" class="nav-link">Events</a>
                 <a href="gallery.html" class="nav-link">Gallery</a>
                 <a href="contact.html" class="nav-link">Contact</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
             </div>
         </div>
     </nav>
@@ -64,46 +154,29 @@
         </div>
     </div>
 
-    <div id="memberList" class="member-grid">
+    <div id="memberList" class="member-grid"></div>
+
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-header-bg"></div>
+            <div id="modalData" class="modal-body">
+                </div>
         </div>
+    </div>
 
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="assets/images/logo.png" alt="ACMO Logo">
-                        <span>ACMO</span>
-                    </div>
-                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
-                    <div class="social-links">
-                        <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
-                        <a href="mailto:acmou.18@gmail.com">📧</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="members.html">Members</a></li>
-                        <li><a href="events.html">Events</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact Info</h3>
-                    <p>📧 acmou.18@gmail.com</p>
-                    <p>📱 +8801636-119044</p>
-                    <p>📍 Bangladesh</p>
-                </div>
-            </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 All Rights Reserved | Designed by <b>Mamun</b></p>
             </div>
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script> <script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        let currentMembers = [];
+
         function fetchMembers(file, btn) {
             document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
             btn.classList.add('active');
@@ -114,10 +187,11 @@
             fetch(file)
             .then(response => response.json())
             .then(data => {
+                currentMembers = data;
                 list.innerHTML = "";
-                data.forEach(m => {
+                data.forEach((m, index) => {
                     list.innerHTML += `
-                        <div class="member-card">
+                        <div class="member-card" onclick="openModal(${index})">
                             <div class="id-header">ID NO: ${m.id}</div>
                             <div class="card-body">
                                 <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
@@ -125,9 +199,6 @@
                                 <h3>${m.name}</h3>
                                 <p class="designation">${m.designation}</p>
                                 <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
-                                <div class="social-links-card">
-                                    <a href="${m.email}" target="_blank"><i class="fas fa-envelope"></i></a>
-                                </div>
                             </div>
                         </div>
                     `;
@@ -136,6 +207,46 @@
             .catch(err => {
                 list.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1;">Error loading data.</p>`;
             });
+        }
+
+        function openModal(index) {
+            const m = currentMembers[index];
+            const modalData = document.getElementById('modalData');
+            
+            modalData.innerHTML = `
+                <img src="${m.photo}" class="modal-photo" onerror="this.src='assets/images/logo.png'">
+                <h2 style="margin: 10px 0 5px 0;">${m.name}</h2>
+                <p style="color:#007bff; font-weight:bold; margin:0;">${m.designation}</p>
+                <div class="status-badge">${m.status || 'Active Member'}</div>
+                
+                <div class="info-section">
+                    <div class="info-item"><label>সংগঠনের আইডি</label><span>${m.id}</span></div>
+                    <div class="info-item"><label>রক্তের গ্রুপ</label><span>${m.bloodGroup}</span></div>
+                    <div class="info-item"><label>পেশাগত পরিচয়</label><span>${m.profession || 'N/A'}</span></div>
+                    <div class="info-item"><label>যোগদানের তারিখ</label><span>${m.joiningDate || 'N/A'}</span></div>
+                    <div class="info-item"><label>ফোন</label><span>${m.phone || 'N/A'}</span></div>
+                    <div class="info-item"><label>ইমেইল</label><span>${m.email || 'N/A'}</span></div>
+                    <div class="info-item" style="grid-column: span 2;"><label>স্কিল</label><span>${m.skill || 'N/A'}</span></div>
+                </div>
+
+                <div class="bio-box">
+                    <strong>সংক্ষিপ্ত বায়ো:</strong><br>
+                    ${m.bio || 'সদস্য সম্পর্কে কোনো তথ্য নেই।'}
+                    <br><br>
+                    <strong>Achievement:</strong> ${m.achievement || 'N/A'}
+                </div>
+            `;
+            document.getElementById('memberModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('memberModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('memberModal')) {
+                closeModal();
+            }
         }
 
         window.onload = () => {
