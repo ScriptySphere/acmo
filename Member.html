@@ -10,164 +10,202 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        /* Modal Base Styling */
+        /* --- Professional Modal (Full Page Look) --- */
         .modal {
             display: none; 
             position: fixed; 
-            z-index: 2000; 
-            left: 0; top: 0; width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.6);
+            z-index: 9999; 
+            left: 0; top: 0; 
+            width: 100%; height: 100%; 
+            background-color: #f8fafc;
             overflow-y: auto;
-            backdrop-filter: blur(5px);
+            animation: fadeIn 0.4s ease-out;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(1.05); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         .modal-content {
-            background: #f8f9fa;
-            margin: 20px auto;
-            width: 95%;
-            max-width: 500px;
+            background: transparent;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 700px;
+            min-height: 100vh;
             position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            animation: slideUp 0.4s ease-out;
         }
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+
         .close-btn {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            font-size: 24px;
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            font-size: 20px;
             color: #fff;
-            background: rgba(0,0,0,0.3);
-            width: 35px;
-            height: 35px;
+            background: #ef4444;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 100;
+            z-index: 10001;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
             transition: 0.3s;
         }
-        .close-btn:hover { background: #ff4757; }
+        .close-btn:hover { transform: rotate(90deg); background: #dc2626; }
 
-        /* Professional Modal Body */
+        /* Header Section */
         .modal-header-bg {
-            background: linear-gradient(135deg, #007bff, #00c6ff);
-            height: 140px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            height: 220px;
             width: 100%;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
         }
+
         .modal-body {
-            padding: 0 20px 30px;
+            padding: 0 20px 60px;
+            margin-top: -90px;
             text-align: center;
-            margin-top: -70px;
         }
+
         .modal-photo {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 5px solid #fff;
+            width: 170px;
+            height: 170px;
+            border-radius: 25px;
+            border: 6px solid #fff;
             object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             background: #fff;
         }
 
+        /* Profile Info Cards */
         .info-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
-            margin-top: 25px;
-            text-align: left;
+            margin-top: 30px;
         }
+
         .info-card {
-            background: #fff;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid #eee;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 18px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+            transition: 0.3s;
         }
+
         .info-card label {
             display: block;
             font-size: 11px;
-            color: #888;
+            color: #64748b;
             text-transform: uppercase;
-            margin-bottom: 4px;
-            font-weight: 600;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
         }
+
         .info-card span {
             font-size: 14px;
-            color: #333;
+            color: #1e293b;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
-        .info-card i { color: #007bff; width: 15px; }
+
+        .info-card i { color: #3b82f6; width: 18px; }
+
+        .full-width-card {
+            grid-column: 1 / -1;
+        }
 
         .bio-box {
-            background: #eef2f7;
-            padding: 15px;
-            border-radius: 12px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 18px;
             margin-top: 20px;
             text-align: left;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #444;
-            border-left: 4px solid #007bff;
+            border-left: 5px solid #3b82f6;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        /* Share Modal Styling */
+        /* Buttons Styling */
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #059669;
+            color: #fff !important;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 15px;
+            margin-top: 25px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: 0.3s;
+            box-shadow: 0 10px 15px -3px rgba(5, 150, 105, 0.3);
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        .download-btn:hover { background: #047857; transform: translateY(-2px); }
+
+        /* --- Share Modal Styling --- */
         #shareModal {
             display: none;
             position: fixed;
-            z-index: 3000;
+            z-index: 10002;
             left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(15, 23, 42, 0.8);
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(4px);
         }
         .share-content {
             background: #fff;
-            padding: 25px;
-            border-radius: 20px;
+            padding: 30px;
+            border-radius: 24px;
             text-align: center;
-            width: 320px;
+            width: 90%;
+            max-width: 360px;
             animation: zoomIn 0.3s ease;
         }
         @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
         .copy-link-box {
             display: flex;
-            background: #f1f3f5;
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 15px;
-            align-items: center;
-            border: 1px solid #ddd;
+            background: #f1f5f9;
+            padding: 8px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid #e2e8f0;
         }
         .copy-link-box input {
             border: none;
             background: transparent;
             width: 100%;
-            font-size: 12px;
+            padding: 0 10px;
+            font-size: 13px;
+            color: #475569;
             outline: none;
-            color: #555;
         }
         .copy-btn {
-            background: #007bff;
-            color: white;
+            background: #1e293b;
+            color: #fff;
             border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 12px;
-            white-space: nowrap;
+            font-weight: 600;
         }
-        .copy-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -224,7 +262,7 @@
 
     <div id="memberModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></span>
             <div class="modal-header-bg"></div>
             <div id="modalData" class="modal-body"></div>
         </div>
@@ -232,13 +270,13 @@
 
     <div id="shareModal">
         <div class="share-content">
-            <h3 style="margin-bottom:15px">Share Profile</h3>
-            <div id="qrcode"></div>
+            <h3 style="color:#1e293b; margin-bottom:15px;">Share Profile</h3>
+            <div id="qrcode" style="display:flex; justify-content:center; margin-bottom:10px;"></div>
             <div class="copy-link-box">
                 <input type="text" id="shareLinkInput" readonly>
                 <button class="copy-btn" onclick="copyLink()">Copy</button>
             </div>
-            <button onclick="closeShare()" class="btn-view" style="margin-top: 15px; width:100%; background:#6c757d;">Close</button>
+            <button onclick="closeShare()" style="margin-top:20px; background:none; border:none; color:#64748b; cursor:pointer; font-weight:600;">Close</button>
         </div>
     </div>
 
@@ -258,7 +296,7 @@
             document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
             btn.classList.add('active');
             const list = document.getElementById('memberList');
-            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">লোড হচ্ছে...</p>`;
+            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1; padding: 50px;">লোড হচ্ছে...</p>`;
 
             fetch(file)
             .then(response => response.json())
@@ -277,7 +315,7 @@
                                 <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
                             </div>
                             <div class="card-actions">
-                                <button class="btn-view" onclick="openModal(${index})">View Details</button>
+                                <button class="btn-view" onclick="openModal(${index})">View Profile</button>
                                 <button class="btn-share" onclick="openShare('${m.id}')">
                                     <i class="fas fa-share-alt"></i>
                                 </button>
@@ -296,29 +334,42 @@
             
             modalData.innerHTML = `
                 <img src="${m.photo}" class="modal-photo" onerror="this.src='assets/images/logo.png'">
-                <h2 style="margin: 15px 0 5px 0; font-size: 22px; color:#333;">${m.name}</h2>
-                <p style="color:#007bff; font-weight:bold; font-size: 15px; margin:0;">${m.designation}</p>
+                <h2 style="margin: 20px 0 5px; font-size: 26px; color:#1e293b;">${m.name}</h2>
+                <div style="display:inline-block; background:#dbeafe; color:#2563eb; padding:6px 16px; border-radius:50px; font-weight:700; font-size:13px; margin-bottom:10px;">
+                    ${m.designation}
+                </div>
                 
                 <div class="info-grid">
-                    <div class="info-card"><label>আইডি নং</label><span><i class="fas fa-id-badge"></i> ${m.id}</span></div>
-                    <div class="info-card"><label>রক্তের গ্রুপ</label><span><i class="fas fa-droplet"></i> ${m.bloodGroup}</span></div>
-                    <div class="info-card"><label>ফোন</label><span><i class="fas fa-phone"></i> ${m.phone || 'N/A'}</span></div>
-                    <div class="info-card"><label>যোগদান</label><span><i class="fas fa-calendar-check"></i> ${m.joiningDate || 'N/A'}</span></div>
-                </div>
-
-                <div class="info-card" style="margin-top:15px; width:100%; box-sizing:border-box;">
-                    <label>ইমেইল এড্রেস</label>
-                    <span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span>
+                    <div class="info-card">
+                        <label>Member ID</label>
+                        <span><i class="fas fa-id-card"></i> ${m.id}</span>
+                    </div>
+                    <div class="info-card">
+                        <label>Blood Group</label>
+                        <span><i class="fas fa-droplet" style="color:#ef4444;"></i> ${m.bloodGroup}</span>
+                    </div>
+                    <div class="info-card">
+                        <label>Phone</label>
+                        <span><i class="fas fa-phone-alt"></i> ${m.phone || 'N/A'}</span>
+                    </div>
+                    <div class="info-card">
+                        <label>Joining Date</label>
+                        <span><i class="fas fa-calendar-alt"></i> ${m.joiningDate || 'N/A'}</span>
+                    </div>
+                    <div class="info-card full-width-card">
+                        <label>Email Address</label>
+                        <span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span>
+                    </div>
                 </div>
 
                 <div class="bio-box">
-                    <i class="fas fa-quote-left" style="color:#007bff; margin-right:5px;"></i>
-                    ${m.bio || 'সদস্য সম্পর্কে কোনো তথ্য নেই।'}
+                    <h4 style="margin:0 0 10px; color:#1e40af; font-size:16px;"><i class="fas fa-user-circle"></i> Short Bio</h4>
+                    <p style="color:#475569; font-size:14px; line-height:1.6; margin:0;">${m.bio || 'এই সদস্য সম্পর্কে এখনো কোনো তথ্য যোগ করা হয়নি।'}</p>
                 </div>
 
-                <a href="#" class="download-btn" onclick="alert('Generating ID Card for ID: ${m.id}')">
-                    <i class="fas fa-download"></i> Download ID Card
-                </a>
+                <button class="download-btn" onclick="alert('Digital ID Card generate হচ্ছে...')">
+                    <i class="fas fa-cloud-download-alt"></i> DOWNLOAD DIGITAL ID CARD
+                </button>
             `;
             document.getElementById('memberModal').style.display = "block";
             document.body.style.overflow = "hidden";
@@ -329,7 +380,6 @@
             document.body.style.overflow = "auto";
         }
 
-        // Share & Copy Logic
         function openShare(id) {
             const shareUrl = window.location.origin + window.location.pathname + "?id=" + id;
             document.getElementById('shareModal').style.display = "flex";
@@ -340,22 +390,23 @@
             new QRCode(qrContainer, {
                 text: shareUrl,
                 width: 150,
-                height: 150
+                height: 150,
+                colorDark : "#1e293b",
+                colorLight : "#ffffff"
             });
         }
 
         function copyLink() {
-            const copyText = document.getElementById("shareLinkInput");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value);
+            const input = document.getElementById('shareLinkInput');
+            input.select();
+            navigator.clipboard.writeText(input.value);
             
             const btn = document.querySelector('.copy-btn');
             btn.innerText = "Copied!";
-            btn.style.background = "#28a745";
+            btn.style.background = "#059669";
             setTimeout(() => {
                 btn.innerText = "Copy";
-                btn.style.background = "#007bff";
+                btn.style.background = "#1e293b";
             }, 2000);
         }
 
