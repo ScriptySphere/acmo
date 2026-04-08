@@ -10,7 +10,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        /* --- Member Card Buttons (Updated Professional Look) --- */
+        /* --- কালার থিম আপডেট (Blue থেকে Red/Orange) --- */
+        :root {
+            --primary-color: #dc2626; /* Crimson Red */
+            --primary-dark: #991b1b;
+            --accent-color: #f59e0b; /* Orange/Gold */
+            --bg-light: #f8fafc;
+        }
+
         .card-actions {
             display: flex;
             gap: 12px;
@@ -21,7 +28,7 @@
 
         .btn-view {
             flex: 1;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
             color: #fff;
             border: none;
             padding: 12px;
@@ -30,15 +37,14 @@
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .btn-view:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
-            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            box-shadow: 0 6px 15px rgba(220, 38, 38, 0.3);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #7f1d1d 100%);
         }
 
         .btn-share {
@@ -53,14 +59,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
         }
 
         .btn-share:hover {
             background: #fff;
-            color: #2563eb;
-            border-color: #2563eb;
-            transform: translateY(-2px);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
         }
 
         /* --- Full Page Profile Modal --- */
@@ -70,7 +74,7 @@
             z-index: 9999; 
             left: 0; top: 0; 
             width: 100%; height: 100%; 
-            background-color: #f8fafc;
+            background-color: var(--bg-light);
             overflow-y: auto;
             animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -95,7 +99,7 @@
             top: 20px;
             font-size: 20px;
             color: #fff;
-            background: #ef4444;
+            background: var(--primary-color);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -104,11 +108,10 @@
             justify-content: center;
             cursor: pointer;
             z-index: 10001;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
         .modal-header-bg {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
             height: 200px;
             width: 100%;
             border-bottom-left-radius: 40px;
@@ -128,7 +131,6 @@
             border: 6px solid #fff;
             object-fit: cover;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            background: #fff;
         }
 
         .info-grid {
@@ -164,9 +166,9 @@
             gap: 8px;
         }
 
-        .info-card i { color: #3b82f6; }
+        .info-card i { color: var(--primary-color); }
 
-        .bio-box {
+        .detail-box {
             background: #fff;
             padding: 20px;
             border-radius: 15px;
@@ -175,8 +177,13 @@
             border: 1px solid #e2e8f0;
         }
 
+        .achievement-box {
+            background: #fff8f1; /* Light Orange Tint */
+            border: 1px dashed var(--accent-color);
+        }
+
         .download-btn {
-            background: #059669;
+            background: #15803d;
             color: #fff !important;
             padding: 16px;
             border-radius: 12px;
@@ -186,13 +193,11 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            text-decoration: none;
             width: 100%;
             border: none;
             cursor: pointer;
         }
 
-        /* --- Share Modal --- */
         #shareModal {
             display: none;
             position: fixed;
@@ -210,23 +215,6 @@
             text-align: center;
             width: 320px;
         }
-        .copy-link-box {
-            display: flex;
-            background: #f1f5f9;
-            padding: 6px;
-            border-radius: 10px;
-            margin-top: 15px;
-            border: 1px solid #e2e8f0;
-        }
-        .copy-btn {
-            background: #1e293b;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-        }
     </style>
 </head>
 <body>
@@ -236,12 +224,10 @@
                 <img src="assets/images/logo.png" alt="ACMO Logo" class="logo">
                 <span class="logo-text">ACMO</span>
             </div>
-            <div class="nav-menu" id="nav-menu">
+            <div class="nav-menu">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="about.html" class="nav-link">About</a>
                 <a href="members.html" class="nav-link active">Members</a>
-                <a href="events.html" class="nav-link">Events</a>
-                <a href="gallery.html" class="nav-link">Gallery</a>
                 <a href="contact.html" class="nav-link">Contact</a>
             </div>
         </div>
@@ -258,13 +244,11 @@
 
     <div class="board-icons">
         <div class="icon-btn active" onclick="fetchMembers('central_members.json', this)">
-            <i class="fas fa-shield-halved"></i>
-            <p>Central Board</p>
+            <i class="fas fa-shield-halved"></i><p>Central Board</p>
         </div>
         <div class="icon-btn" onclick="fetchMembers('divisional_members.json', this)"><i class="fas fa-map-location-dot"></i><p>Divisional</p></div>
         <div class="icon-btn" onclick="fetchMembers('district_members.json', this)"><i class="fas fa-city"></i><p>District</p></div>
         <div class="icon-btn" onclick="fetchMembers('upazila_members.json', this)"><i class="fas fa-building"></i><p>Upazila</p></div>
-        <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)"><i class="fas fa-bolt"></i><p>Changemaker</p></div>
     </div>
 
     <div id="memberList" class="member-grid"></div>
@@ -281,9 +265,9 @@
         <div class="share-content">
             <h3 style="margin-bottom:15px; color:#1e293b;">Share Profile</h3>
             <div id="qrcode" style="display:flex; justify-content:center; margin-bottom:15px;"></div>
-            <div class="copy-link-box">
+            <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px;">
                 <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none;">
-                <button class="copy-btn" onclick="copyLink()">Copy</button>
+                <button onclick="copyLink()" class="copy-btn" style="background:#1e293b; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Copy</button>
             </div>
             <button onclick="closeShare()" style="margin-top:20px; border:none; background:none; color:#64748b; cursor:pointer; font-weight:600;">Close</button>
         </div>
@@ -297,7 +281,6 @@
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
     <script>
         let currentMembers = [];
 
@@ -315,12 +298,12 @@
                 data.forEach((m, index) => {
                     list.innerHTML += `
                         <div class="member-card">
-                            <div class="id-header">ID NO: ${m.id}</div>
+                            <div class="id-header" style="background: var(--primary-dark)">ID NO: ${m.id}</div>
                             <div class="card-body">
-                                <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
+                                <span class="blood-group-tag" style="background: rgba(220,38,38,0.1); color: var(--primary-color);">🩸 ${m.bloodGroup}</span>
                                 <img src="${m.photo}" alt="${m.name}" class="member-photo" onerror="this.src='assets/images/logo.png'">
                                 <h3>${m.name}</h3>
-                                <p class="designation">${m.designation}</p>
+                                <p class="designation" style="color:var(--primary-color)">${m.designation}</p>
                                 <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
                             </div>
                             <div class="card-actions">
@@ -341,28 +324,38 @@
             
             modalData.innerHTML = `
                 <img src="${m.photo}" class="modal-photo" onerror="this.src='assets/images/logo.png'">
-                <h2 style="margin: 15px 0 5px; font-size: 24px; color:#1e293b;">${m.name}</h2>
-                <p style="color:#2563eb; font-weight:700; margin-bottom:20px;">${m.designation}</p>
+                <h2 style="margin: 15px 0 5px; font-size: 26px; color:#1e293b;">${m.name}</h2>
+                <p style="color:var(--primary-color); font-weight:700; margin-bottom:20px;">${m.designation}</p>
                 
                 <div class="info-grid">
-                    <div class="info-card"><label>ID Number</label><span><i class="fas fa-fingerprint"></i> ${m.id}</span></div>
-                    <div class="info-card"><label>Blood Group</label><span><i class="fas fa-tint" style="color:#ef4444;"></i> ${m.bloodGroup}</span></div>
-                    <div class="info-card"><label>Phone</label><span><i class="fas fa-phone"></i> ${m.phone || 'N/A'}</span></div>
-                    <div class="info-card"><label>Joined</label><span><i class="fas fa-calendar-alt"></i> ${m.joiningDate || 'N/A'}</span></div>
+                    <div class="info-card"><label>সংগঠনের আইডি নম্বর</label><span><i class="fas fa-id-badge"></i> ${m.id}</span></div>
+                    <div class="info-card"><label>রক্তের গ্রুপ</label><span><i class="fas fa-tint" style="color:#ef4444;"></i> ${m.bloodGroup}</span></div>
+                    <div class="info-card"><label>ফোন নম্বর</label><span><i class="fas fa-phone"></i> ${m.phone || 'N/A'}</span></div>
+                    <div class="info-card"><label>যোগদানের তারিখ</label><span><i class="fas fa-calendar-check"></i> ${m.joiningDate || 'N/A'}</span></div>
                 </div>
 
-                <div class="info-card" style="margin-top:15px; width:100%;">
-                    <label>Email</label>
-                    <span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span>
+                <div class="info-grid" style="margin-top:15px;">
+                    <div class="info-card"><label>ইমেইল এড্রেস</label><span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span></div>
+                    <div class="info-card"><label>পেশাগত পরিচয়</label><span><i class="fas fa-user-tie"></i> ${m.profession || 'N/A'}</span></div>
                 </div>
 
-                <div class="bio-box">
-                    <h4 style="margin:0 0 10px; color:#1e40af;"><i class="fas fa-user-tag"></i> About</h4>
+                <div class="detail-box">
+                    <h4 style="margin:0 0 10px; color:var(--primary-dark);"><i class="fas fa-laptop-code"></i> Skills</h4>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.skills || 'কোনো স্কিল যুক্ত করা হয়নি।'}</p>
+                </div>
+
+                <div class="detail-box achievement-box">
+                    <h4 style="margin:0 0 10px; color:#b45309;"><i class="fas fa-award"></i> অর্জিত সাফল্য (Achievements)</h4>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.achievements || 'এখনো কোনো অর্জন যুক্ত করা হয়নি।'}</p>
+                </div>
+
+                <div class="detail-box">
+                    <h4 style="margin:0 0 10px; color:var(--primary-dark);"><i class="fas fa-quote-left"></i> সংক্ষিপ্ত বায়ো</h4>
                     <p style="font-size:14px; color:#475569; line-height:1.6; margin:0;">${m.bio || 'সদস্য সম্পর্কে তথ্য নেই।'}</p>
                 </div>
 
                 <button class="download-btn" onclick="alert('Digital ID Card generate হচ্ছে...')">
-                    <i class="fas fa-id-card"></i> DOWNLOAD IDENTITY CARD
+                    <i class="fas fa-download"></i> DOWNLOAD IDENTITY CARD
                 </button>
             `;
             document.getElementById('memberModal').style.display = "block";
@@ -388,20 +381,23 @@
             const input = document.getElementById('shareLinkInput');
             input.select();
             navigator.clipboard.writeText(input.value);
-            const btn = document.querySelector('.copy-btn');
-            btn.innerText = "Copied!";
-            btn.style.background = "#059669";
-            setTimeout(() => { btn.innerText = "Copy"; btn.style.background = "#1e293b"; }, 2000);
+            alert("Link Copied!");
         }
 
         function closeShare() { document.getElementById('shareModal').style.display = "none"; }
 
-        window.onclick = function(event) {
-            if (event.target.id == 'memberModal') closeModal();
-            if (event.target.id == 'shareModal') closeShare();
-        }
-
-        window.onload = () => fetchMembers('central_members.json', document.querySelector('.icon-btn'));
+        // URL চেক করে অটো প্রোফাইল ওপেন করা (শেয়ার লিংকের জন্য)
+        window.onload = () => {
+            fetchMembers('central_members.json', document.querySelector('.icon-btn'));
+            const urlParams = new URLSearchParams(window.location.search);
+            const memberId = urlParams.get('id');
+            if (memberId) {
+                setTimeout(() => {
+                    const index = currentMembers.findIndex(m => m.id === memberId);
+                    if (index !== -1) openModal(index);
+                }, 1000);
+            }
+        };
     </script>
 </body>
 </html>
