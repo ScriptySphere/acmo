@@ -4,31 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Members - ACMO</title>
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <style>
-        /* Existing Styles + New Card Buttons */
-        :root { --primary: #007bff; --secondary: #6c757d; }
-        .member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; }
-        .member-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; border: 1px solid #eee; }
-        .card-actions { display: flex; border-top: 1px solid #eee; }
-        .btn-action { flex: 1; padding: 12px; border: none; cursor: pointer; background: #fff; font-size: 14px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-details { color: var(--primary); border-right: 1px solid #eee; }
-        .btn-share { color: var(--secondary); }
-        .btn-action:hover { background: #f8f9fa; }
 
-        /* Modal Enhancements */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); overflow-y: auto; }
-        .modal-content { background: #fff; margin: 20px auto; border-radius: 20px; width: 90%; max-width: 450px; position: relative; }
-        .id-card-view { padding: 20px; text-align: center; } /* This part will be captured as image */
+    <style>
+        /* Modal Base Styling */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0; top: 0; width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            overflow-y: auto;
+        }
+        .modal-content {
+            background: #fff;
+            margin: 2% auto;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: modalSlide 0.4s ease-out;
+        }
+        @keyframes modalSlide {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute; right: 15px; top: 10px;
+            font-size: 28px; color: #fff; cursor: pointer; z-index: 100;
+        }
+
+        /* Card Actions on Main Page */
+        .card-footer-btns {
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+        .btn-card {
+            flex: 1; padding: 12px; border: none; background: #fff;
+            cursor: pointer; font-size: 13px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 5px;
+            transition: 0.3s;
+        }
+        .btn-view { color: #007bff; border-right: 1px solid #eee; }
+        .btn-share-main { color: #666; }
+        .btn-card:hover { background: #f8f9fa; }
+
+        /* Modal Body (ID Card View) */
+        .id-card-capture { padding: 0 0 20px 0; text-align: center; }
+        .modal-header-bg {
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            height: 100px; width: 100%;
+        }
+        .modal-body-content { padding: 0 20px; margin-top: -60px; }
+        .modal-photo {
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 5px solid #fff; object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .info-grid {
+            text-align: left; margin-top: 20px; display: grid;
+            grid-template-columns: 1fr 1fr; gap: 12px;
+            border-top: 1px solid #eee; padding-top: 15px;
+        }
+        .info-item label { display: block; font-size: 10px; color: #888; text-transform: uppercase; }
+        .info-item span { font-size: 13px; color: #333; font-weight: 600; }
         
-        .modal-footer { padding: 15px; display: flex; gap: 10px; justify-content: center; background: #f1f1f1; border-radius: 0 0 20px 20px; }
-        .btn-download { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-        
-        /* Share Modal */
-        #shareSection { text-align: center; padding: 20px; display: none; border-top: 1px dotted #ccc; }
-        #qrcode { display: flex; justify-content: center; margin: 15px 0; }
+        /* Share & Download Section */
+        #shareArea { 
+            margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc;
+            display: none; 
+        }
+        #qrcode { display: flex; justify-content: center; margin: 10px 0; }
+        .modal-footer-btns {
+            padding: 15px; background: #f8f9fa; border-radius: 0 0 20px 20px;
+            text-align: center;
+        }
+        .btn-download {
+            background: #28a745; color: white; border: none;
+            padding: 10px 25px; border-radius: 50px; cursor: pointer;
+            font-weight: 600; font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -37,52 +100,60 @@
 
     <div id="memberModal" class="modal">
         <div class="modal-content">
-            <span style="position:absolute; right:15px; top:10px; font-size:30px; cursor:pointer; z-index:100;" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             
-            <div id="captureArea" class="id-card-view">
-                <div style="background: var(--primary); height:80px; margin:-20px -20px 40px -20px; border-radius:20px 20px 0 0;"></div>
-                <img id="m-photo" src="" style="width:120px; height:120px; border-radius:50%; border:5px solid #fff; margin-top:-80px; object-fit:cover;">
-                <h2 id="m-name" style="margin:10px 0 5px 0;"></h2>
-                <p id="m-desig" style="color:var(--primary); font-weight:bold;"></p>
-                <hr>
-                <div style="text-align:left; font-size:13px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                    <div><strong>ID:</strong> <span id="m-id"></span></div>
-                    <div><strong>Blood:</strong> <span id="m-blood"></span></div>
-                    <div style="grid-column: span 2;"><strong>Bio:</strong> <span id="m-bio"></span></div>
-                </div>
-                <div id="shareSection">
-                    <p style="font-size:11px; color:#666;">Scan to verify member</p>
-                    <div id="qrcode"></div>
-                    <small id="shareLink" style="word-break: break-all; color: var(--primary);"></small>
+            <div id="captureArea" class="id-card-capture">
+                <div class="modal-header-bg"></div>
+                <div class="modal-body-content">
+                    <img id="m-photo" src="" class="modal-photo" onerror="this.src='assets/images/logo.png'">
+                    <h2 id="m-name" style="margin: 10px 0 5px 0; color: #333;"></h2>
+                    <p id="m-desig" style="color: #007bff; font-weight: bold; margin: 0;"></p>
+                    <div id="m-status" style="display:inline-block; padding:2px 10px; background:#e0fadd; color:#28a745; border-radius:15px; font-size:11px; margin-top:5px; font-weight:bold;">Active Member</div>
+
+                    <div class="info-grid">
+                        <div class="info-item"><label>সংগঠনের আইডি</label><span id="m-id"></span></div>
+                        <div class="info-item"><label>রক্তের গ্রুপ</label><span id="m-blood"></span></div>
+                        <div class="info-item"><label>পেশা</label><span id="m-prof"></span></div>
+                        <div class="info-item"><label>যোগদান</label><span id="m-join"></span></div>
+                        <div class="info-item" style="grid-column: span 2;"><label>ইমেইল</label><span id="m-email"></span></div>
+                    </div>
+
+                    <div id="shareArea">
+                        <div id="qrcode"></div>
+                        <p id="shareLink" style="font-size: 10px; color: #007bff; word-break: break-all;"></p>
+                    </div>
                 </div>
             </div>
 
-            <div class="modal-footer">
-                <button class="btn-download" onclick="downloadID()"><i class="fas fa-download"></i> Save Image</button>
+            <div class="modal-footer-btns">
+                <button class="btn-download" onclick="downloadCard()"><i class="fas fa-file-image"></i> Download ID Card</button>
             </div>
         </div>
     </div>
 
     <script>
-        let membersData = [];
+        let allData = [];
 
         function fetchMembers(file) {
             fetch(file).then(res => res.json()).then(data => {
-                membersData = data;
+                allData = data;
                 const list = document.getElementById('memberList');
                 list.innerHTML = data.map((m, index) => `
                     <div class="member-card">
-                        <div style="padding:20px; text-align:center;">
-                            <img src="${m.photo}" style="width:100px; height:100px; border-radius:50%; object-fit:cover;">
+                        <div class="id-header">ID NO: ${m.id}</div>
+                        <div class="card-body">
+                            <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
+                            <img src="${m.photo}" class="member-photo" onerror="this.src='assets/images/logo.png'">
                             <h3>${m.name}</h3>
-                            <p style="font-size:14px; color:#777;">${m.designation}</p>
+                            <p class="designation">${m.designation}</p>
+                            <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
                         </div>
-                        <div class="card-actions">
-                            <button class="btn-action btn-details" onclick="openDetails(${index})">
-                                <i class="fas fa-info-circle"></i> View Details
+                        <div class="card-footer-btns">
+                            <button class="btn-card btn-view" onclick="openProfile(${index}, false)">
+                                <i class="fas fa-user-circle"></i> Details
                             </button>
-                            <button class="btn-action btn-share" onclick="shareMember(${index})">
-                                <i class="fas fa-share-alt"></i> Share
+                            <button class="btn-card btn-share-main" onclick="openProfile(${index}, true)">
+                                <i class="fas fa-share-nodes"></i> Share
                             </button>
                         </div>
                     </div>
@@ -90,18 +161,19 @@
             });
         }
 
-        function openDetails(index, showShare = false) {
-            const m = membersData[index];
+        function openProfile(index, isSharing) {
+            const m = allData[index];
             document.getElementById('m-photo').src = m.photo;
             document.getElementById('m-name').innerText = m.name;
             document.getElementById('m-desig').innerText = m.designation;
             document.getElementById('m-id').innerText = m.id;
             document.getElementById('m-blood').innerText = m.bloodGroup;
-            document.getElementById('m-bio').innerText = m.bio || 'ACMO Member';
-            
-            // Handle Share Section visibility
-            const shareSec = document.getElementById('shareSection');
-            if(showShare) {
+            document.getElementById('m-prof').innerText = m.profession || 'N/A';
+            document.getElementById('m-join').innerText = m.joiningDate || 'N/A';
+            document.getElementById('m-email').innerText = m.email || 'N/A';
+
+            const shareSec = document.getElementById('shareArea');
+            if(isSharing) {
                 shareSec.style.display = 'block';
                 generateQR(m.id);
             } else {
@@ -111,29 +183,29 @@
             document.getElementById('memberModal').style.display = 'block';
         }
 
-        function shareMember(index) {
-            openDetails(index, true);
-        }
+        function generateQR(id) {
+            const qrBox = document.getElementById('qrcode');
+            qrBox.innerHTML = "";
+            const profileLink = window.location.origin + window.location.pathname + "?member_id=" + id;
+            document.getElementById('shareLink').innerText = profileLink;
 
-        function generateQR(memberId) {
-            const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = "";
-            const uniqueUrl = window.location.origin + window.location.pathname + "?id=" + memberId;
-            document.getElementById('shareLink').innerText = uniqueUrl;
-            
-            new QRCode(qrContainer, {
-                text: uniqueUrl,
+            new QRCode(qrBox, {
+                text: profileLink,
                 width: 100,
                 height: 100
             });
         }
 
-        function downloadID() {
+        function downloadCard() {
             const area = document.getElementById('captureArea');
-            html2canvas(area, { useCORS: true }).then(canvas => {
+            // Using html2canvas to take a screenshot of the modal content
+            html2canvas(area, { 
+                useCORS: true,
+                scale: 2 // Higher quality
+            }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'ACMO-Member-Card.png';
-                link.href = canvas.toDataURL();
+                link.download = `ACMO_Card_${document.getElementById('m-id').innerText}.png`;
+                link.href = canvas.toDataURL("image/png");
                 link.click();
             });
         }
@@ -142,6 +214,12 @@
             document.getElementById('memberModal').style.display = 'none';
         }
 
+        // Close on outside click
+        window.onclick = (e) => {
+            if(e.target == document.getElementById('memberModal')) closeModal();
+        }
+
+        // Initial Load
         window.onload = () => fetchMembers('central_members.json');
     </script>
 </body>
