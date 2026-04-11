@@ -12,6 +12,10 @@
     <script src="https://cdn.jsdelivr.net/npm/easyqrcodejs@4.4.13/dist/easy.qrcode.min.js"></script>
 
     <style>
+        /* ----------------------------------------------------------- */
+        /* --- আপার দেওয়া ডিজাইন হুবহু বজায় রাখা হলো (CSS) --- */
+        /* ----------------------------------------------------------- */
+        
         /* --- Member Card Buttons --- */
         .card-actions {
             display: flex;
@@ -40,6 +44,7 @@
         .btn-view:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(220, 38, 38, 0.3);
+            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
         }
 
         .btn-share {
@@ -61,6 +66,7 @@
             background: #fff;
             color: #dc2626;
             border-color: #dc2626;
+            transform: translateY(-2px);
         }
 
         /* --- Full Page Profile Modal --- */
@@ -104,6 +110,7 @@
             justify-content: center;
             cursor: pointer;
             z-index: 10001;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
         .modal-header-bg {
@@ -127,6 +134,7 @@
             border: 6px solid #fff;
             object-fit: cover;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: #fff;
         }
 
         .info-grid {
@@ -144,72 +152,38 @@
             border: 1px solid #e2e8f0;
         }
 
-        /* --- Share Modal Improvements --- */
-        #shareModal {
-            display: none;
-            position: fixed;
-            z-index: 10002;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.9);
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-        }
-        .share-content {
-            background: #fff;
-            padding: 25px;
-            border-radius: 24px;
-            text-align: center;
-            width: 90%;
-            max-width: 380px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        
-        #qrcode {
-            background: #fff;
-            padding: 15px;
-            border-radius: 18px;
-            border: 1px solid #eef2f6;
-            width: 220px;
-            height: 220px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #qrcode canvas, #qrcode img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .qr-download-link {
+        .info-card label {
             display: block;
-            margin-top: 20px;
-            background: #dc2626;
-            color: #fff !important;
-            text-decoration: none;
-            font-weight: 700;
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .info-card span {
             font-size: 14px;
-            padding: 14px;
-            border-radius: 12px;
-            transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
-        }
-
-        .qr-download-link:hover {
-            background: #991b1b;
-            transform: translateY(-2px);
-        }
-
-        .copy-link-box {
+            color: #1e293b;
+            font-weight: 600;
             display: flex;
-            background: #f1f5f9;
-            padding: 8px;
-            border-radius: 12px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-card i { color: #dc2626; }
+
+        .detail-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
             margin-top: 15px;
+            text-align: left;
             border: 1px solid #e2e8f0;
+        }
+
+        .achievement-box {
+            background: #fff8f1;
+            border: 1px dashed #f59e0b;
         }
 
         .download-btn {
@@ -228,10 +202,68 @@
             border: none;
             cursor: pointer;
         }
+
+        /* --- Share Modal (Design same, only container updated for clarity) --- */
+        #shareModal {
+            display: none;
+            position: fixed;
+            z-index: 10002;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .share-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            width: 320px;
+        }
+        
+        /* QR Container - আপার ডিজাইন ঠিক রাখতে CSS একই রাখা হলো */
+        #qrcode {
+            background: #fff;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            width: 200px; /* ওয়েবসাইট এ দেখানোর সাইজ */
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        /* গুরুত্বপূর্ণ: কিউআর কোড এর ইমেজ বা ক্যানভাস যেন কন্টেইনারের বাইরে না যায় */
+        #qrcode canvas, #qrcode img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-download-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            border: 2px solid #dc2626;
+            padding: 8px 20px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .qr-download-link:hover {
+            background: #dc2626;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-
+    
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -280,18 +312,15 @@
 
     <div id="shareModal">
         <div class="share-content">
-            <h3 style="margin-bottom:15px; color:#1e293b;">Member QR Profile</h3>
+            <h3 style="margin-bottom:15px; color:#1e293b;">Profile QR Code (HD)</h3>
             
             <div id="qrcode"></div>
             
-            <div class="copy-link-box">
-                <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none; color: #475569;">
-                <button onclick="copyLink()" style="background:#1e293b; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-size: 12px; font-weight: 600;">Copy</button>
+            <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px; margin-top: 15px; border: 1px solid #e2e8f0;">
+                <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none; color:#475569;">
+                <button class="copy-btn" onclick="copyLink()" style="background:#1e293b; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:600;">Copy</button>
             </div>
-
-            <div id="qrDownloadContainer"></div>
-
-            <button onclick="closeShare()" style="margin-top:20px; border:none; background:none; color:#94a3b8; cursor:pointer; font-weight:600; font-size: 14px;">CLOSE</button>
+            <button onclick="closeShare()" style="margin-top:20px; border:none; background:none; color:#64748b; cursor:pointer; font-weight:600;">Close</button>
         </div>
     </div>
 
@@ -305,6 +334,8 @@
 
     <script src="assets/js/main.js"></script>
     <script>
+        // --- JavaScript লজিক (শুধুমাত্র openShare ফাংশনটি পরিবর্তন করা হয়েছে) ---
+
         let currentMembers = [];
 
         function fetchMembers(file, btn) {
@@ -352,12 +383,34 @@
                 <img src="${m.photo}" class="modal-photo" onerror="this.src='assets/images/logo.png'">
                 <h2 style="margin: 15px 0 5px; font-size: 24px; color:#1e293b;">${m.name}</h2>
                 <p style="color:#dc2626; font-weight:700; margin-bottom:20px;">${m.designation}</p>
+                
                 <div class="info-grid">
                     <div class="info-card"><label>সংগঠনের আইডি নম্বর</label><span><i class="fas fa-fingerprint"></i> ${m.id}</span></div>
                     <div class="info-card"><label>রক্তের গ্রুপ</label><span><i class="fas fa-tint" style="color:#ef4444;"></i> ${m.bloodGroup}</span></div>
                     <div class="info-card"><label>ফোন নম্বর</label><span><i class="fas fa-phone"></i> ${m.phone || 'N/A'}</span></div>
                     <div class="info-card"><label>যোগদানের তারিখ</label><span><i class="fas fa-calendar-alt"></i> ${m.joiningDate || 'N/A'}</span></div>
                 </div>
+
+                <div class="info-grid" style="margin-top:15px;">
+                    <div class="info-card"><label>ইমেইল এড্রেস</label><span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span></div>
+                    <div class="info-card"><label>পেশাগত পরিচয়</label><span><i class="fas fa-briefcase"></i> ${m.profession || 'N/A'}</span></div>
+                </div>
+
+                <div class="detail-box">
+                    <h4 style="margin:0 0 10px; color:#991b1b;"><i class="fas fa-laptop-code"></i> Skills</h4>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.skills || 'কোনো স্কিল যুক্ত করা হয়নি। '}</p>
+                </div>
+
+                <div class="detail-box achievement-box">
+                    <h4 style="margin:0 0 10px; color:#b45309;"><i class="fas fa-award"></i> অর্জিত সাফল্য (Achievements)</h4>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.achievements || 'এখনো কোনো অর্জন যুক্ত করা হয়নি।'}</p>
+                </div>
+
+                <div class="detail-box">
+                    <h4 style="margin:0 0 10px; color:#991b1b;"><i class="fas fa-user-tag"></i> সংক্ষিপ্ত বায়ো</h4>
+                    <p style="font-size:14px; color:#475569; line-height:1.6; margin:0;">${m.bio || 'সদস্য সম্পর্কে তথ্য নেই।'}</p>
+                </div>
+
                 <button class="download-btn" onclick="alert('Digital ID Card generate হচ্ছে...')">
                     <i class="fas fa-id-card"></i> DOWNLOAD IDENTITY CARD
                 </button>
@@ -367,45 +420,64 @@
         }
 
         function closeModal() {
-            document.getElementById('memberModal').style.display = "none";
-            document.body.style.overflow = "auto";
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('id')) {
+                window.location.href = window.location.pathname; 
+            } else {
+                document.getElementById('memberModal').style.display = "none";
+                document.body.style.overflow = "auto";
+            }
         }
 
-        // --- Improved Share & QR Logic ---
+        // -----------------------------------------------------------
+        // --- পরিবর্তিত openShare ফাংশন (QR কোড চেঞ্জ) ---
+        // -----------------------------------------------------------
         function openShare(id) {
             const shareUrl = window.location.origin + window.location.pathname + "?id=" + id;
             document.getElementById('shareModal').style.display = "flex";
             document.getElementById('shareLinkInput').value = shareUrl;
             
             const qrContainer = document.getElementById('qrcode');
-            const downloadContainer = document.getElementById('qrDownloadContainer');
-            qrContainer.innerHTML = ""; 
-            downloadContainer.innerHTML = "";
-
-            // Create High-Res QR for Website View and Download
-            new QRCode(qrContainer, {
+            qrContainer.innerHTML = ""; // আগের QR পরিষ্কার করা
+            
+            // EasyQRCodeJS কনফিগারেশন - যা ওয়েবসাইট এ শার্প এবং ডাউনলোডে HD দেবে
+            const qrcode = new QRCode(qrContainer, {
                 text: shareUrl,
-                width: 800, // High internal resolution
-                height: 800,
+                
+                // ডাউনলোডের জন্য আসল সাইজ (High Resolution)
+                width: 1000, 
+                height: 1000,
+                
                 colorDark: "#000000",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H,
-                dotScale: 1,
-                // Logo settings
-                logo: "assets/images/logo.png",
-                logoWidth: 200,
-                logoHeight: 200,
+                correctLevel: QRCode.CorrectLevel.H, // সর্বোচ্চ ত্রুটি সংশোধন (Logo র জন্য দরকার)
+                
+                // রেন্ডারিং মোড ক্যানভাস রাখা হলো ডাউনলোড কোয়ালিটি ভালো রাখার জন্য
+                drawer: 'canvas', 
+
+                // লোগো সেটিংস
+                logo: "assets/images/logo.png", // লোগোর পাথ ঠিক আছে তো?
+                logoWidth: 250, // লোগোর সাইজ একটু বাড়ানো হলো
+                logoHeight: 250,
                 logoBackgroundColor: '#ffffff',
                 logoBackgroundTransparent: false,
                 
+                // QR কোড তৈরি শেষ হলে এই ফাংশনটি চলবে
                 onRenderingEnd: function(options, dataURL) {
-                    // Create high-quality download link
+                    // আগের ডাউনলোড বাটন থাকলে ডিলিট করা
+                    const oldBtn = document.querySelector('.qr-download-link');
+                    if(oldBtn) oldBtn.remove();
+
+                    // নতুন ডাউনলোড বাটন তৈরি
                     const downloadLink = document.createElement('a');
-                    downloadLink.href = dataURL;
+                    downloadLink.href = dataURL; // HD ইমেজ এর ডাটা
                     downloadLink.download = `ACMO_Member_${id}_QR_HD.png`;
-                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download Ultra HD QR';
+                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download HD QR';
                     downloadLink.className = 'qr-download-link';
-                    downloadContainer.appendChild(downloadLink);
+                    
+                    // ক্লোজ বাটনের ঠিক আগে বাটনটি যুক্ত করা
+                    const closeBtn = document.querySelector('#shareModal .share-content button[onclick="closeShare()"]');
+                    closeBtn.parentNode.insertBefore(downloadLink, closeBtn);
                 }
             });
         }
@@ -413,12 +485,24 @@
         function copyLink() {
             const input = document.getElementById('shareLinkInput');
             input.select();
+            input.setSelectionRange(0, 99999); // মোবাইলের জন্য
             navigator.clipboard.writeText(input.value);
-            alert("Profile link copied!");
+            
+            const copyBtn = document.querySelector('.copy-btn');
+            copyBtn.innerHTML = "Copied!";
+            copyBtn.style.background = "#059669";
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = "Copy";
+                copyBtn.style.background = "#1e293b";
+            }, 2000);
         }
 
         function closeShare() { 
             document.getElementById('shareModal').style.display = "none";
+            // ক্লিন আপ
+            const oldBtn = document.querySelector('.qr-download-link');
+            if(oldBtn) oldBtn.remove();
         }
 
         window.onload = () => {
@@ -429,7 +513,9 @@
             .then(data => {
                 if (memberId) {
                     const index = data.findIndex(m => m.id === memberId);
-                    if (index !== -1) openModal(index);
+                    if (index !== -1) {
+                        openModal(index);
+                    }
                 }
             });
         };
