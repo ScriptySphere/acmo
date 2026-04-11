@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/gh/ushelp/EasyQRCodeJS@master/dist/easy.qrcode.min.js"></script>
+
     <style>
         /* --- Member Card Buttons --- */
         .card-actions {
@@ -217,19 +219,25 @@
         }
         .qr-download-link {
             display: inline-block;
-            margin-top: 12px;
+            margin-top: 15px;
             color: #dc2626;
             text-decoration: none;
             font-weight: 700;
             font-size: 14px;
-            border: 1px solid #dc2626;
-            padding: 8px 15px;
-            border-radius: 8px;
+            border: 2px solid #dc2626;
+            padding: 8px 20px;
+            border-radius: 10px;
             transition: 0.3s;
         }
         .qr-download-link:hover {
             background: #dc2626;
             color: #fff;
+        }
+        #qrcode img {
+            border: 1px solid #e2e8f0;
+            padding: 5px;
+            border-radius: 10px;
+            background: #fff;
         }
     </style>
 </head>
@@ -282,7 +290,7 @@
 
     <div id="shareModal">
         <div class="share-content">
-            <h3 style="margin-bottom:15px; color:#1e293b;">Share Profile</h3>
+            <h3 style="margin-bottom:15px; color:#1e293b;">Profile QR Code</h3>
             <div id="qrcode" style="display:flex; flex-direction:column; align-items:center; margin-bottom:15px;"></div>
             <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px;">
                 <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none;">
@@ -396,46 +404,47 @@
         }
 
         function openShare(id) {
+            // মেম্বার প্রোফাইলের সঠিক লিঙ্ক তৈরি
             const shareUrl = window.location.origin + window.location.pathname + "?id=" + id;
             document.getElementById('shareModal').style.display = "flex";
             document.getElementById('shareLinkInput').value = shareUrl;
             
             const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = "";
+            qrContainer.innerHTML = ""; 
             
-            // QR Code জেনারেশন (এটি ক্যানভাস তৈরি করবে)
-            new QRCode(qrContainer, { 
-                text: shareUrl, 
-                width: 140, 
-                height: 140,
-                correctLevel : QRCode.CorrectLevel.H 
-            });
-
-            // রেন্ডার হওয়ার জন্য সামান্য সময় বিরতি
-            setTimeout(() => {
-                const canvas = qrContainer.querySelector('canvas');
-                if (canvas) {
-                    const qrImageUrl = canvas.toDataURL("image/png"); // ক্যানভাসকে ইমেজে রূপান্তর
-                    
-                    // আগের ডাউনলোড বাটন থাকলে ডিলিট করে নতুনটা দেওয়া
+            // লোগোসহ কিউআর কোড তৈরি (EasyQRCodeJS)
+            new QRCode(qrContainer, {
+                text: shareUrl,
+                width: 180,
+                height: 180,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H, // লোগোর জন্য High কারেকশন প্রয়োজন
+                logo: "assets/images/logo.png",      // আপনার লোগো পাথ
+                logoWidth: 50,
+                logoHeight: 50,
+                logoBackgroundColor: '#ffffff',
+                logoBackgroundTransparent: false,
+                onRenderingEnd: function(options, dataURL) {
+                    // ডাউনলোড লিঙ্ক তৈরি
                     const existingBtn = qrContainer.querySelector('.qr-download-link');
                     if(existingBtn) existingBtn.remove();
 
                     const downloadLink = document.createElement('a');
-                    downloadLink.href = qrImageUrl;
+                    downloadLink.href = dataURL;
                     downloadLink.download = `ACMO_Member_${id}_QR.png`;
                     downloadLink.innerHTML = '<i class="fas fa-download"></i> Download QR Image';
                     downloadLink.className = 'qr-download-link';
                     qrContainer.appendChild(downloadLink);
                 }
-            }, 300);
+            });
         }
 
         function copyLink() {
             const input = document.getElementById('shareLinkInput');
             input.select();
             navigator.clipboard.writeText(input.value);
-            alert("Link Copied!");
+            alert("Profile Link Copied!");
         }
 
         function closeShare() { document.getElementById('shareModal').style.display = "none"; }
