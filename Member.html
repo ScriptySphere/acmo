@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script src="https://cdn.jsdelivr.net/gh/ushelp/EasyQRCodeJS@master/dist/easy.qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/easyqrcodejs@4.4.13/dist/easy.qrcode.min.js"></script>
 
     <style>
         /* --- Member Card Buttons --- */
@@ -238,6 +238,9 @@
             padding: 10px;
             border-radius: 15px;
             border: 1px solid #e2e8f0;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -291,8 +294,8 @@
     <div id="shareModal">
         <div class="share-content">
             <h3 style="margin-bottom:15px; color:#1e293b;">Profile QR Code (HD)</h3>
-            <div id="qrcode" style="display:flex; flex-direction:column; align-items:center; margin-bottom:15px;"></div>
-            <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px;">
+            <div id="qrcode" style="display:flex; flex-direction:column; align-items:center; margin-bottom:15px; margin: 0 auto;"></div>
+            <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px; margin-top: 15px;">
                 <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none;">
                 <button class="copy-btn" onclick="copyLink()" style="background:#1e293b; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Copy</button>
             </div>
@@ -372,7 +375,7 @@
 
                 <div class="detail-box">
                     <h4 style="margin:0 0 10px; color:#991b1b;"><i class="fas fa-laptop-code"></i> Skills</h4>
-                    <p style="font-size:14px; color:#475569; margin:0;">${m.skills || 'কোনো স্কিল যুক্ত করা হয়নি।'}</p>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.skills || 'কোনো স্কিল যুক্ত করা হয়নি। '}</p>
                 </div>
 
                 <div class="detail-box achievement-box">
@@ -411,42 +414,42 @@
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = ""; 
             
-            // HD QR Code Generation with Logo
+            // Generate High Quality QR
             new QRCode(qrContainer, {
                 text: shareUrl,
-                width: 400,            // উচ্চ রেজোলিউশন
+                width: 400,
                 height: 400,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.Level.H, // লোগোর জন্য হাই এরর কারেকশন
+                correctLevel: 3, // Level H
                 logo: "assets/images/logo.png",
                 logoWidth: 100,
                 logoHeight: 100,
                 logoBackgroundColor: '#ffffff',
                 logoBackgroundTransparent: false,
                 onRenderingEnd: function(options, dataURL) {
-                    const existingBtn = qrContainer.querySelector('.qr-download-link');
-                    if(existingBtn) existingBtn.remove();
+                    const oldBtn = document.querySelector('.qr-download-link');
+                    if(oldBtn) oldBtn.remove();
 
                     const downloadLink = document.createElement('a');
                     downloadLink.href = dataURL;
-                    downloadLink.download = `ACMO_Member_${id}_HD_QR.png`;
+                    downloadLink.download = `ACMO_Member_${id}_QR.png`;
                     downloadLink.innerHTML = '<i class="fas fa-download"></i> Download HD QR Image';
                     downloadLink.className = 'qr-download-link';
-                    qrContainer.appendChild(downloadLink);
+                    // Append after the copy link box
+                    document.querySelector('.share-content').appendChild(downloadLink);
                 }
             });
 
-            // ডিসপ্লেতে দেখার জন্য সাইজ ছোট রাখা (ডাউনলোড ইমেজ বড়ই থাকবে)
-            qrContainer.style.width = "200px";
-            qrContainer.style.height = "200px";
+            // Make it responsive for the modal view
             setTimeout(() => {
                 const qrImg = qrContainer.querySelector('img');
                 if(qrImg) {
                     qrImg.style.width = "100%";
-                    qrImg.style.height = "auto";
+                    qrImg.style.height = "100%";
+                    qrImg.style.objectFit = "contain";
                 }
-            }, 100);
+            }, 200);
         }
 
         function copyLink() {
@@ -456,7 +459,12 @@
             alert("Profile Link Copied!");
         }
 
-        function closeShare() { document.getElementById('shareModal').style.display = "none"; }
+        function closeShare() { 
+            document.getElementById('shareModal').style.display = "none";
+            // Clean up the download link when closing
+            const oldBtn = document.querySelector('.qr-download-link');
+            if(oldBtn) oldBtn.remove();
+        }
 
         window.onload = () => {
             const urlParams = new URLSearchParams(window.location.search);
