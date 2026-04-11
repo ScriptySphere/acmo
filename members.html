@@ -8,100 +8,229 @@
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        /* Modal Base Styling */
+        /* --- Member Card Buttons --- */
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            padding: 15px 20px 20px;
+            background: #fff;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .btn-view {
+            flex: 1;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-view:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(220, 38, 38, 0.3);
+            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+        }
+
+        .btn-share {
+            background: #f8fafc;
+            color: #64748b;
+            border: 1.5px solid #e2e8f0;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .btn-share:hover {
+            background: #fff;
+            color: #dc2626;
+            border-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        /* --- Full Page Profile Modal --- */
         .modal {
             display: none; 
             position: fixed; 
-            z-index: 2000; 
-            left: 0; top: 0; width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
+            z-index: 9999; 
+            left: 0; top: 0; 
+            width: 100%; height: 100%; 
+            background-color: #f8fafc;
+            overflow-y: auto;
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .modal-content {
-            background: #fff;
-            margin: 2% auto;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: modalSlide 0.4s ease-out;
-        }
-        @keyframes modalSlide {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .close-btn {
-            position: absolute;
-            right: 15px;
-            top: 10px;
-            font-size: 28px;
-            color: #fff;
-            cursor: pointer;
-            z-index: 10;
-        }
-        /* Modal Body Styling */
-        .modal-header-bg {
-            background: linear-gradient(135deg, #007bff, #00c6ff);
-            height: 100px;
+            background: transparent;
+            margin: 0 auto;
             width: 100%;
+            max-width: 700px;
+            min-height: 100vh;
+            position: relative;
         }
-        .modal-body {
-            padding: 20px;
-            text-align: center;
-            margin-top: -60px;
-        }
-        .modal-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 5px solid #fff;
-            object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-            background: #28a745;
+
+        .close-btn {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            font-size: 20px;
             color: #fff;
-            margin-top: 10px;
+            background: #ef4444;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10001;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
-        .info-section {
-            text-align: left;
-            margin-top: 20px;
+
+        .modal-header-bg {
+            background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+            height: 200px;
+            width: 100%;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .modal-body {
+            padding: 0 20px 50px;
+            margin-top: -80px;
+            text-align: center;
+        }
+
+        .modal-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 25px;
+            border: 6px solid #fff;
+            object-fit: cover;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+
+        .info-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
+            margin-top: 25px;
         }
-        .info-item label {
-            display: block;
-            font-size: 11px;
-            color: #888;
-            text-transform: uppercase;
-        }
-        .info-item span {
-            font-size: 14px;
-            color: #333;
-            font-weight: 600;
-        }
-        .bio-box {
-            text-align: left;
-            background: #f9f9f9;
+
+        .info-card {
+            background: #fff;
             padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-size: 13px;
-            line-height: 1.5;
+            border-radius: 15px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
         }
-        .member-card { cursor: pointer; transition: transform 0.2s; }
-        .member-card:hover { transform: scale(1.02); }
+
+        .info-card label {
+            display: block;
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .info-card span {
+            font-size: 14px;
+            color: #1e293b;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-card i { color: #dc2626; }
+
+        .detail-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+
+        .achievement-box {
+            background: #fff8f1;
+            border: 1px dashed #f59e0b;
+        }
+
+        .download-btn {
+            background: #059669;
+            color: #fff !important;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 25px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* --- Share Modal --- */
+        #shareModal {
+            display: none;
+            position: fixed;
+            z-index: 10002;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .share-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            width: 320px;
+        }
+        .qr-download-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            border: 1px solid #dc2626;
+            padding: 5px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .qr-download-link:hover {
+            background: #dc2626;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -133,35 +262,33 @@
 
     <div class="board-icons">
         <div class="icon-btn active" onclick="fetchMembers('central_members.json', this)">
-            <i class="fas fa-shield-halved"></i>
-            <p>Central Board</p>
+            <i class="fas fa-shield-halved"></i><p>Central Board</p>
         </div>
-        <div class="icon-btn" onclick="fetchMembers('divisional_members.json', this)">
-            <i class="fas fa-map-location-dot"></i>
-            <p>Divisional</p>
-        </div>
-        <div class="icon-btn" onclick="fetchMembers('district_members.json', this)">
-            <i class="fas fa-city"></i>
-            <p>District</p>
-        </div>
-        <div class="icon-btn" onclick="fetchMembers('upazila_members.json', this)">
-            <i class="fas fa-building"></i>
-            <p>Upazila</p>
-        </div>
-        <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)">
-            <i class="fas fa-bolt"></i>
-            <p>Changemaker</p>
-        </div>
+        <div class="icon-btn" onclick="fetchMembers('divisional_members.json', this)"><i class="fas fa-map-location-dot"></i><p>Divisional</p></div>
+        <div class="icon-btn" onclick="districtFetch('district_members.json', this)"><i class="fas fa-city"></i><p>District</p></div>
+        <div class="icon-btn" onclick="fetchMembers('upazila_members.json', this)"><i class="fas fa-building"></i><p>Upazila</p></div>
+        <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)"><i class="fas fa-bolt"></i><p>Changemaker</p></div>
     </div>
 
     <div id="memberList" class="member-grid"></div>
 
     <div id="memberModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></span>
             <div class="modal-header-bg"></div>
-            <div id="modalData" class="modal-body">
-                </div>
+            <div id="modalData" class="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="shareModal">
+        <div class="share-content">
+            <h3 style="margin-bottom:15px; color:#1e293b;">Share Profile</h3>
+            <div id="qrcode" style="display:flex; flex-direction:column; align-items:center; margin-bottom:15px;"></div>
+            <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px;">
+                <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none;">
+                <button class="copy-btn" onclick="copyLink()" style="background:#1e293b; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Copy</button>
+            </div>
+            <button onclick="closeShare()" style="margin-top:20px; border:none; background:none; color:#64748b; cursor:pointer; font-weight:600;">Close</button>
         </div>
     </div>
 
@@ -178,20 +305,21 @@
         let currentMembers = [];
 
         function fetchMembers(file, btn) {
-            document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
-            btn.classList.add('active');
-
+            if(btn) {
+                document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
+                btn.classList.add('active');
+            }
             const list = document.getElementById('memberList');
-            list.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">লোড হচ্ছে...</p>`;
+            list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px;">লোড হচ্ছে...</p>`;
 
-            fetch(file)
+            return fetch(file)
             .then(response => response.json())
             .then(data => {
                 currentMembers = data;
                 list.innerHTML = "";
                 data.forEach((m, index) => {
                     list.innerHTML += `
-                        <div class="member-card" onclick="openModal(${index})">
+                        <div class="member-card">
                             <div class="id-header">ID NO: ${m.id}</div>
                             <div class="card-body">
                                 <span class="blood-group-tag">🩸 ${m.bloodGroup}</span>
@@ -200,12 +328,16 @@
                                 <p class="designation">${m.designation}</p>
                                 <p class="location"><i class="fas fa-location-dot"></i> ${m.location}</p>
                             </div>
+                            <div class="card-actions">
+                                <button class="btn-view" onclick="openModal(${index})">View Profile</button>
+                                <button class="btn-share" onclick="openShare('${m.id}')">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
                         </div>
                     `;
                 });
-            })
-            .catch(err => {
-                list.innerHTML = `<p style="color:red; text-align:center; grid-column: 1/-1;">Error loading data.</p>`;
+                return data;
             });
         }
 
@@ -215,42 +347,108 @@
             
             modalData.innerHTML = `
                 <img src="${m.photo}" class="modal-photo" onerror="this.src='assets/images/logo.png'">
-                <h2 style="margin: 10px 0 5px 0;">${m.name}</h2>
-                <p style="color:#007bff; font-weight:bold; margin:0;">${m.designation}</p>
-                <div class="status-badge">${m.status || 'Active Member'}</div>
+                <h2 style="margin: 15px 0 5px; font-size: 24px; color:#1e293b;">${m.name}</h2>
+                <p style="color:#dc2626; font-weight:700; margin-bottom:20px;">${m.designation}</p>
                 
-                <div class="info-section">
-                    <div class="info-item"><label>সংগঠনের আইডি</label><span>${m.id}</span></div>
-                    <div class="info-item"><label>রক্তের গ্রুপ</label><span>${m.bloodGroup}</span></div>
-                    <div class="info-item"><label>পেশাগত পরিচয়</label><span>${m.profession || 'N/A'}</span></div>
-                    <div class="info-item"><label>যোগদানের তারিখ</label><span>${m.joiningDate || 'N/A'}</span></div>
-                    <div class="info-item"><label>ফোন</label><span>${m.phone || 'N/A'}</span></div>
-                    <div class="info-item"><label>ইমেইল</label><span>${m.email || 'N/A'}</span></div>
-                    <div class="info-item" style="grid-column: span 2;"><label>স্কিল</label><span>${m.skill || 'N/A'}</span></div>
+                <div class="info-grid">
+                    <div class="info-card"><label>সংগঠনের আইডি নম্বর</label><span><i class="fas fa-fingerprint"></i> ${m.id}</span></div>
+                    <div class="info-card"><label>রক্তের গ্রুপ</label><span><i class="fas fa-tint" style="color:#ef4444;"></i> ${m.bloodGroup}</span></div>
+                    <div class="info-card"><label>ফোন নম্বর</label><span><i class="fas fa-phone"></i> ${m.phone || 'N/A'}</span></div>
+                    <div class="info-card"><label>যোগদানের তারিখ</label><span><i class="fas fa-calendar-alt"></i> ${m.joiningDate || 'N/A'}</span></div>
                 </div>
 
-                <div class="bio-box">
-                    <strong>সংক্ষিপ্ত বায়ো:</strong><br>
-                    ${m.bio || 'সদস্য সম্পর্কে কোনো তথ্য নেই।'}
-                    <br><br>
-                    <strong>Achievement:</strong> ${m.achievement || 'N/A'}
+                <div class="info-grid" style="margin-top:15px;">
+                    <div class="info-card"><label>ইমেইল এড্রেস</label><span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span></div>
+                    <div class="info-card"><label>পেশাগত পরিচয়</label><span><i class="fas fa-briefcase"></i> ${m.profession || 'N/A'}</span></div>
                 </div>
+
+                <div class="detail-box">
+                    <h4 style="margin:0 0 10px; color:#991b1b;"><i class="fas fa-laptop-code"></i> Skills</h4>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.skills || 'কোনো স্কিল যুক্ত করা হয়নি।'}</p>
+                </div>
+
+                <div class="detail-box achievement-box">
+                    <h4 style="margin:0 0 10px; color:#b45309;"><i class="fas fa-award"></i> অর্জিত সাফল্য (Achievements)</h4>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.achievements || 'এখনো কোনো অর্জন যুক্ত করা হয়নি।'}</p>
+                </div>
+
+                <div class="detail-box">
+                    <h4 style="margin:0 0 10px; color:#991b1b;"><i class="fas fa-user-tag"></i> সংক্ষিপ্ত বায়ো</h4>
+                    <p style="font-size:14px; color:#475569; line-height:1.6; margin:0;">${m.bio || 'সদস্য সম্পর্কে তথ্য নেই।'}</p>
+                </div>
+
+                <button class="download-btn" onclick="alert('Digital ID Card generate হচ্ছে...')">
+                    <i class="fas fa-id-card"></i> DOWNLOAD IDENTITY CARD
+                </button>
             `;
             document.getElementById('memberModal').style.display = "block";
+            document.body.style.overflow = "hidden";
         }
 
         function closeModal() {
-            document.getElementById('memberModal').style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('memberModal')) {
-                closeModal();
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('id')) {
+                window.location.href = window.location.pathname; // প্রোফাইল লিঙ্ক থেকে আসলে ক্লোজ করলে মেইন পেজে ফিরবে
+            } else {
+                document.getElementById('memberModal').style.display = "none";
+                document.body.style.overflow = "auto";
             }
         }
 
+        function openShare(id) {
+            const shareUrl = window.location.origin + window.location.pathname + "?id=" + id;
+            document.getElementById('shareModal').style.display = "flex";
+            document.getElementById('shareLinkInput').value = shareUrl;
+            
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = "";
+            
+            // QR Code জেনারেশন
+            new QRCode(qrContainer, { 
+                text: shareUrl, 
+                width: 140, 
+                height: 140,
+                correctLevel : QRCode.CorrectLevel.H 
+            });
+
+            // ডাউনলোড লিঙ্ক তৈরির জন্য একটু সময় দেওয়া (QR রেন্ডার হওয়ার জন্য)
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img');
+                if (qrImg) {
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = qrImg.src;
+                    downloadLink.download = `ACMO_Member_${id}_QR.png`;
+                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download QR';
+                    downloadLink.className = 'qr-download-link';
+                    qrContainer.appendChild(downloadLink);
+                }
+            }, 500);
+        }
+
+        function copyLink() {
+            const input = document.getElementById('shareLinkInput');
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            alert("Link Copied!");
+        }
+
+        function closeShare() { document.getElementById('shareModal').style.display = "none"; }
+
+        // URL প্যারামিটার চেক করে সরাসরি মেম্বার প্রোফাইল দেখানো
         window.onload = () => {
-            fetchMembers('central_members.json', document.querySelector('.icon-btn'));
+            const urlParams = new URLSearchParams(window.location.search);
+            const memberId = urlParams.get('id');
+
+            // ডিফল্টভাবে সেন্ট্রাল মেম্বার লোড হবে
+            fetchMembers('central_members.json', document.querySelector('.icon-btn'))
+            .then(data => {
+                if (memberId) {
+                    const index = data.findIndex(m => m.id === memberId);
+                    if (index !== -1) {
+                        openModal(index);
+                    }
+                }
+            });
         };
     </script>
 </body>
