@@ -223,7 +223,7 @@
             font-weight: 700;
             font-size: 14px;
             border: 1px solid #dc2626;
-            padding: 5px 15px;
+            padding: 8px 15px;
             border-radius: 8px;
             transition: 0.3s;
         }
@@ -388,7 +388,7 @@
         function closeModal() {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('id')) {
-                window.location.href = window.location.pathname; // প্রোফাইল লিঙ্ক থেকে আসলে ক্লোজ করলে মেইন পেজে ফিরবে
+                window.location.href = window.location.pathname; 
             } else {
                 document.getElementById('memberModal').style.display = "none";
                 document.body.style.overflow = "auto";
@@ -403,7 +403,7 @@
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = "";
             
-            // QR Code জেনারেশন
+            // QR Code জেনারেশন (এটি ক্যানভাস তৈরি করবে)
             new QRCode(qrContainer, { 
                 text: shareUrl, 
                 width: 140, 
@@ -411,18 +411,24 @@
                 correctLevel : QRCode.CorrectLevel.H 
             });
 
-            // ডাউনলোড লিঙ্ক তৈরির জন্য একটু সময় দেওয়া (QR রেন্ডার হওয়ার জন্য)
+            // রেন্ডার হওয়ার জন্য সামান্য সময় বিরতি
             setTimeout(() => {
-                const qrImg = qrContainer.querySelector('img');
-                if (qrImg) {
+                const canvas = qrContainer.querySelector('canvas');
+                if (canvas) {
+                    const qrImageUrl = canvas.toDataURL("image/png"); // ক্যানভাসকে ইমেজে রূপান্তর
+                    
+                    // আগের ডাউনলোড বাটন থাকলে ডিলিট করে নতুনটা দেওয়া
+                    const existingBtn = qrContainer.querySelector('.qr-download-link');
+                    if(existingBtn) existingBtn.remove();
+
                     const downloadLink = document.createElement('a');
-                    downloadLink.href = qrImg.src;
+                    downloadLink.href = qrImageUrl;
                     downloadLink.download = `ACMO_Member_${id}_QR.png`;
-                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download QR';
+                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download QR Image';
                     downloadLink.className = 'qr-download-link';
                     qrContainer.appendChild(downloadLink);
                 }
-            }, 500);
+            }, 300);
         }
 
         function copyLink() {
@@ -434,12 +440,10 @@
 
         function closeShare() { document.getElementById('shareModal').style.display = "none"; }
 
-        // URL প্যারামিটার চেক করে সরাসরি মেম্বার প্রোফাইল দেখানো
         window.onload = () => {
             const urlParams = new URLSearchParams(window.location.search);
             const memberId = urlParams.get('id');
 
-            // ডিফল্টভাবে সেন্ট্রাল মেম্বার লোড হবে
             fetchMembers('central_members.json', document.querySelector('.icon-btn'))
             .then(data => {
                 if (memberId) {
