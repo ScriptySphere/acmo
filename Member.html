@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        /* --- Member Card Buttons (Updated to Red/Orange) --- */
+        /* --- Member Card Buttons --- */
         .card-actions {
             display: flex;
             gap: 12px;
@@ -21,7 +21,7 @@
 
         .btn-view {
             flex: 1;
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); /* Red Theme */
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
             color: #fff;
             border: none;
             padding: 12px;
@@ -108,7 +108,7 @@
         }
 
         .modal-header-bg {
-            background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%); /* Red Gradient Header */
+            background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
             height: 200px;
             width: 100%;
             border-bottom-left-radius: 40px;
@@ -164,7 +164,7 @@
             gap: 8px;
         }
 
-        .info-card i { color: #dc2626; } /* Icon Red Color */
+        .info-card i { color: #dc2626; }
 
         .detail-box {
             background: #fff;
@@ -215,6 +215,22 @@
             text-align: center;
             width: 320px;
         }
+        .qr-download-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            border: 1px solid #dc2626;
+            padding: 5px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .qr-download-link:hover {
+            background: #dc2626;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -249,7 +265,7 @@
             <i class="fas fa-shield-halved"></i><p>Central Board</p>
         </div>
         <div class="icon-btn" onclick="fetchMembers('divisional_members.json', this)"><i class="fas fa-map-location-dot"></i><p>Divisional</p></div>
-        <div class="icon-btn" onclick="fetchMembers('district_members.json', this)"><i class="fas fa-city"></i><p>District</p></div>
+        <div class="icon-btn" onclick="districtFetch('district_members.json', this)"><i class="fas fa-city"></i><p>District</p></div>
         <div class="icon-btn" onclick="fetchMembers('upazila_members.json', this)"><i class="fas fa-building"></i><p>Upazila</p></div>
         <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)"><i class="fas fa-bolt"></i><p>Changemaker</p></div>
     </div>
@@ -267,7 +283,7 @@
     <div id="shareModal">
         <div class="share-content">
             <h3 style="margin-bottom:15px; color:#1e293b;">Share Profile</h3>
-            <div id="qrcode" style="display:flex; justify-content:center; margin-bottom:15px;"></div>
+            <div id="qrcode" style="display:flex; flex-direction:column; align-items:center; margin-bottom:15px;"></div>
             <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px;">
                 <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none;">
                 <button class="copy-btn" onclick="copyLink()" style="background:#1e293b; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Copy</button>
@@ -289,12 +305,14 @@
         let currentMembers = [];
 
         function fetchMembers(file, btn) {
-            document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
-            btn.classList.add('active');
+            if(btn) {
+                document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
+                btn.classList.add('active');
+            }
             const list = document.getElementById('memberList');
             list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px;">লোড হচ্ছে...</p>`;
 
-            fetch(file)
+            return fetch(file)
             .then(response => response.json())
             .then(data => {
                 currentMembers = data;
@@ -319,6 +337,7 @@
                         </div>
                     `;
                 });
+                return data;
             });
         }
 
@@ -367,8 +386,13 @@
         }
 
         function closeModal() {
-            document.getElementById('memberModal').style.display = "none";
-            document.body.style.overflow = "auto";
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('id')) {
+                window.location.href = window.location.pathname; // প্রোফাইল লিঙ্ক থেকে আসলে ক্লোজ করলে মেইন পেজে ফিরবে
+            } else {
+                document.getElementById('memberModal').style.display = "none";
+                document.body.style.overflow = "auto";
+            }
         }
 
         function openShare(id) {
@@ -378,7 +402,27 @@
             
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = "";
-            new QRCode(qrContainer, { text: shareUrl, width: 140, height: 140 });
+            
+            // QR Code জেনারেশন
+            new QRCode(qrContainer, { 
+                text: shareUrl, 
+                width: 140, 
+                height: 140,
+                correctLevel : QRCode.CorrectLevel.H 
+            });
+
+            // ডাউনলোড লিঙ্ক তৈরির জন্য একটু সময় দেওয়া (QR রেন্ডার হওয়ার জন্য)
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img');
+                if (qrImg) {
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = qrImg.src;
+                    downloadLink.download = `ACMO_Member_${id}_QR.png`;
+                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download QR';
+                    downloadLink.className = 'qr-download-link';
+                    qrContainer.appendChild(downloadLink);
+                }
+            }, 500);
         }
 
         function copyLink() {
@@ -390,17 +434,21 @@
 
         function closeShare() { document.getElementById('shareModal').style.display = "none"; }
 
-        // URL চেক করে শেয়ার্ড মেম্বার ওপেন করা
+        // URL প্যারামিটার চেক করে সরাসরি মেম্বার প্রোফাইল দেখানো
         window.onload = () => {
-            fetchMembers('central_members.json', document.querySelector('.icon-btn'));
             const urlParams = new URLSearchParams(window.location.search);
             const memberId = urlParams.get('id');
-            if (memberId) {
-                setTimeout(() => {
-                    const index = currentMembers.findIndex(m => m.id === memberId);
-                    if (index !== -1) openModal(index);
-                }, 1000);
-            }
+
+            // ডিফল্টভাবে সেন্ট্রাল মেম্বার লোড হবে
+            fetchMembers('central_members.json', document.querySelector('.icon-btn'))
+            .then(data => {
+                if (memberId) {
+                    const index = data.findIndex(m => m.id === memberId);
+                    if (index !== -1) {
+                        openModal(index);
+                    }
+                }
+            });
         };
     </script>
 </body>
