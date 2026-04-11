@@ -233,11 +233,11 @@
             background: #dc2626;
             color: #fff;
         }
-        #qrcode img {
-            border: 1px solid #e2e8f0;
-            padding: 5px;
-            border-radius: 10px;
+        #qrcode {
             background: #fff;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
         }
     </style>
 </head>
@@ -290,7 +290,7 @@
 
     <div id="shareModal">
         <div class="share-content">
-            <h3 style="margin-bottom:15px; color:#1e293b;">Profile QR Code</h3>
+            <h3 style="margin-bottom:15px; color:#1e293b;">Profile QR Code (HD)</h3>
             <div id="qrcode" style="display:flex; flex-direction:column; align-items:center; margin-bottom:15px;"></div>
             <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px;">
                 <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none;">
@@ -404,7 +404,6 @@
         }
 
         function openShare(id) {
-            // মেম্বার প্রোফাইলের সঠিক লিঙ্ক তৈরি
             const shareUrl = window.location.origin + window.location.pathname + "?id=" + id;
             document.getElementById('shareModal').style.display = "flex";
             document.getElementById('shareLinkInput').value = shareUrl;
@@ -412,32 +411,42 @@
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = ""; 
             
-            // লোগোসহ কিউআর কোড তৈরি (EasyQRCodeJS)
+            // HD QR Code Generation with Logo
             new QRCode(qrContainer, {
                 text: shareUrl,
-                width: 180,
-                height: 180,
+                width: 400,            // উচ্চ রেজোলিউশন
+                height: 400,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H, // লোগোর জন্য High কারেকশন প্রয়োজন
-                logo: "assets/images/logo.png",      // আপনার লোগো পাথ
-                logoWidth: 50,
-                logoHeight: 50,
+                correctLevel: QRCode.Level.H, // লোগোর জন্য হাই এরর কারেকশন
+                logo: "assets/images/logo.png",
+                logoWidth: 100,
+                logoHeight: 100,
                 logoBackgroundColor: '#ffffff',
                 logoBackgroundTransparent: false,
                 onRenderingEnd: function(options, dataURL) {
-                    // ডাউনলোড লিঙ্ক তৈরি
                     const existingBtn = qrContainer.querySelector('.qr-download-link');
                     if(existingBtn) existingBtn.remove();
 
                     const downloadLink = document.createElement('a');
                     downloadLink.href = dataURL;
-                    downloadLink.download = `ACMO_Member_${id}_QR.png`;
-                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download QR Image';
+                    downloadLink.download = `ACMO_Member_${id}_HD_QR.png`;
+                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download HD QR Image';
                     downloadLink.className = 'qr-download-link';
                     qrContainer.appendChild(downloadLink);
                 }
             });
+
+            // ডিসপ্লেতে দেখার জন্য সাইজ ছোট রাখা (ডাউনলোড ইমেজ বড়ই থাকবে)
+            qrContainer.style.width = "200px";
+            qrContainer.style.height = "200px";
+            setTimeout(() => {
+                const qrImg = qrContainer.querySelector('img');
+                if(qrImg) {
+                    qrImg.style.width = "100%";
+                    qrImg.style.height = "auto";
+                }
+            }, 100);
         }
 
         function copyLink() {
