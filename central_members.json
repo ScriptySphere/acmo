@@ -54,14 +54,20 @@
     "fbLink": ""
   },
   {
-    "id": "ACMO-133220007",
-    "name": "Md. Samsul Arefin",
-    "designation": "Managing Director (MD)",
-    "bloodGroup": "",
-    "location": "Satkhira",
-    "photo": "assets/images/members/2007.jpg",
-    "fbLink": ""
-  },
+  "id": "ACMO-133220007",
+  "name": "Md. Samsul Arefin",
+  "designation": "General Secretary",
+  "location": "Satkhira, Bangladesh",
+  "bloodGroup": "AB+",
+  "photo": "assets/images/2007.png",
+  "phone": "+880 17**-****66",
+  "email": "samsularefin328@gmail.com",
+  "joiningDate": "18 August 2023",
+  "profession": "Student",
+  "skills": "Humanitarian Aid, Strategic Leadership, Graphic Design, IT Support, Social Advocacy, Public Speaking.",
+  "achievements": "UN Best Volunteer Award, President’s Scout Award, Best Divisional Director (2025), National Olympiad Excellence, National Public Speaker, Nominee in Global Young Icon Award 2026.",
+  "bio": "A dedicated youth leader and humanitarian activist with a proven track record of excellence in social advocacy and disaster management since 2017. Driven by a lifelong commitment to creating a positive and sustainable global impact."
+},
   {
     "id": "ACMO-133220008",
     "name": "Hriddhika Chakma",
