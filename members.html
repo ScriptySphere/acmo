@@ -12,109 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/easyqrcodejs@4.4.13/dist/easy.qrcode.min.js"></script>
 
     <style>
-        /* Header Responsive Styles */
-        .site-header {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .nav-logo .logo {
-            height: 40px;
-            width: auto;
-        }
-
-        .logo-details {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #1e293b;
-            line-height: 1.1;
-        }
-
-        .logo-subtext {
-            font-size: 0.65rem;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #334155;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: #dc2626;
-        }
-
-        .highlight-link {
-            color: #d97706;
-            font-weight: 600;
-        }
-
-        .nav-btn {
-            text-decoration: none;
-            background-color: #dc2626;
-            color: #ffffff;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.88rem;
-            transition: background-color 0.3s;
-        }
-
-        .nav-btn:hover {
-            background-color: #991b1b;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .bar {
-            width: 25px;
-            height: 3px;
-            background-color: #1e293b;
-            border-radius: 2px;
-        }
-
         /* Member Card Buttons */
         .card-actions {
             display: flex;
@@ -356,76 +253,6 @@
             background: #dc2626;
             color: #fff;
         }
-
-        /* --- Media Queries --- */
-        @media (max-width: 900px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-menu {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: #ffffff;
-                flex-direction: column;
-                align-items: center;
-                padding: 20px 0;
-                gap: 15px;
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
-                display: none;
-            }
-
-            .nav-menu.active {
-                display: flex;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .page-hero h1 {
-                font-size: 24px;
-            }
-
-            .page-hero p {
-                font-size: 14px;
-            }
-
-            .board-icons {
-                display: flex;
-                overflow-x: auto;
-                padding: 10px;
-                gap: 10px;
-                justify-content: flex-start;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .board-icons .icon-btn {
-                flex: 0 0 auto;
-                min-width: 100px;
-            }
-
-            .share-content {
-                width: 90%;
-                max-width: 320px;
-                padding: 20px;
-            }
-
-            #qrcode {
-                width: 160px;
-                height: 160px;
-            }
-
-            .modal-content {
-                max-width: 100%;
-                border-radius: 0;
-            }
-
-            .close-btn {
-                top: 15px;
-                right: 15px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -506,26 +333,48 @@
         </div>
     </div>
 
+    <!-- Updated Footer -->
     <footer class="footer">
         <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.png" alt="ACMO Logo">
+                        <span>ACMO</span>
+                    </div>
+                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্তFutures এর পথচলা</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
+                        <a href="mailto:acmou.18@gmail.com">📧</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="Member.html">Members</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📧 acmou.18@gmail.com</p>
+                    <p>📱 +8801636-119044</p>
+                    <p>📍 Bangladesh</p>
+                </div>
+            </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 All Rights Reserved | Designed by <b>Mamun</b></p>
+                <p>&copy; 2026 ScriptySphere. All rights reserved. Made with ❤️ by <b> <a href="https://www.scriptysphere.org" 
+           style="color: white;" 
+           onmouseover="this.style.color='lightblue';" 
+           onmouseout="this.style.color='white';">ScriptySphere.</a></b></p>
             </div>
         </div>
     </footer>
 
     <script src="assets/js/main.js"></script>
     <script>
-        // Toggle mobile navbar menu
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
-
-        if (hamburger && navMenu) {
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
-        }
-
         let currentMembers = [];
 
         function fetchMembers(file, btn) {
