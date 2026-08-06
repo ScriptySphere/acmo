@@ -234,22 +234,40 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="assets/images/logo.png" alt="ACMO Logo" class="logo">
-                <span class="logo-text">ACMO</span>
+    <!-- Updated Navigation Header -->
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <!-- Logo Section -->
+                <a href="index.html" class="nav-logo">
+                    <img src="assets/images/logo.png" alt="ACMO Logo" class="logo">
+                    <div class="logo-details">
+                        <span class="logo-text">ACMO</span>
+                        <span class="logo-subtext">Anti Child Marriage Organization</span>
+                    </div>
+                </a>
+
+                <!-- Navigation Links -->
+                <div class="nav-menu" id="nav-menu">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="Member.html" class="nav-link active">Members</a>
+                    <a href="events.html" class="nav-link">Events</a>
+                    <a href="Magazine.html" class="nav-link">Magazine</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="complain.html" class="nav-link highlight-link">Help Desk</a>
+                    <a href="acmo18.org/joinacmo" class="nav-btn">Join Us</a>
+                </div>
+
+                <!-- Hamburger Menu for Mobile -->
+                <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
             </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="members.html" class="nav-link active">Members</a>
-                <a href="events.html" class="nav-link">Events</a>
-                <a href="gallery.html" class="nav-link">Gallery</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <section class="page-hero">
         <div class="hero-overlay">
@@ -403,7 +421,6 @@
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = "";
             
-            // QR Code জেনারেশন (এটি ক্যানভাস তৈরি করবে)
             new QRCode(qrContainer, { 
                 text: shareUrl, 
                 width: 140, 
@@ -411,13 +428,11 @@
                 correctLevel : QRCode.CorrectLevel.H 
             });
 
-            // রেন্ডার হওয়ার জন্য সামান্য সময় বিরতি
             setTimeout(() => {
                 const canvas = qrContainer.querySelector('canvas');
                 if (canvas) {
-                    const qrImageUrl = canvas.toDataURL("image/png"); // ক্যানভাসকে ইমেজে রূপান্তর
+                    const qrImageUrl = canvas.toDataURL("image/png");
                     
-                    // আগের ডাউনলোড বাটন থাকলে ডিলিট করে নতুনটা দেওয়া
                     const existingBtn = qrContainer.querySelector('.qr-download-link');
                     if(existingBtn) existingBtn.remove();
 
