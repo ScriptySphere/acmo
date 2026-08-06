@@ -8,9 +8,114 @@
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/easyqrcodejs@4.4.13/dist/easy.qrcode.min.js"></script>
+
     <style>
-        /* --- Member Card Buttons --- */
+        /* Header Responsive Styles */
+        .site-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-logo .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.1;
+        }
+
+        .logo-subtext {
+            font-size: 0.65rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #334155;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #dc2626;
+        }
+
+        .highlight-link {
+            color: #d97706;
+            font-weight: 600;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            background-color: #dc2626;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: background-color 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #991b1b;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #1e293b;
+            border-radius: 2px;
+        }
+
+        /* Member Card Buttons */
         .card-actions {
             display: flex;
             gap: 12px;
@@ -63,7 +168,7 @@
             transform: translateY(-2px);
         }
 
-        /* --- Full Page Profile Modal --- */
+        /* Full Page Profile Modal */
         .modal {
             display: none; 
             position: fixed; 
@@ -197,7 +302,6 @@
             cursor: pointer;
         }
 
-        /* --- Share Modal --- */
         #shareModal {
             display: none;
             position: fixed;
@@ -215,26 +319,118 @@
             text-align: center;
             width: 320px;
         }
+        
+        #qrcode {
+            background: #fff;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        #qrcode canvas, #qrcode img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
         .qr-download-link {
             display: inline-block;
-            margin-top: 12px;
+            margin-top: 15px;
             color: #dc2626;
             text-decoration: none;
             font-weight: 700;
             font-size: 14px;
-            border: 1px solid #dc2626;
-            padding: 8px 15px;
-            border-radius: 8px;
+            border: 2px solid #dc2626;
+            padding: 8px 20px;
+            border-radius: 10px;
             transition: 0.3s;
         }
         .qr-download-link:hover {
             background: #dc2626;
             color: #fff;
         }
+
+        /* --- Media Queries --- */
+        @media (max-width: 900px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                gap: 15px;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .page-hero h1 {
+                font-size: 24px;
+            }
+
+            .page-hero p {
+                font-size: 14px;
+            }
+
+            .board-icons {
+                display: flex;
+                overflow-x: auto;
+                padding: 10px;
+                gap: 10px;
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .board-icons .icon-btn {
+                flex: 0 0 auto;
+                min-width: 100px;
+            }
+
+            .share-content {
+                width: 90%;
+                max-width: 320px;
+                padding: 20px;
+            }
+
+            #qrcode {
+                width: 160px;
+                height: 160px;
+            }
+
+            .modal-content {
+                max-width: 100%;
+                border-radius: 0;
+            }
+
+            .close-btn {
+                top: 15px;
+                right: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Updated Navigation Header -->
+    
+    <!-- Navigation Header -->
     <header class="site-header">
         <nav class="navbar">
             <div class="nav-container">
@@ -272,8 +468,8 @@
     <section class="page-hero">
         <div class="hero-overlay">
             <div class="container">
-                <h1>আমাদের সদস্যরা</h1>
-                <p>ACMO-র প্রতিটি সদস্য বাল্যবিবাহ প্রতিরোধে নিবেদিতপ্রাণ যোদ্ধা</p>
+                <h1>Our Members</h1>
+                <p>Every ACMO member is a dedicated warrior in preventing child marriage</p>
             </div>
         </div>
     </section>
@@ -300,11 +496,11 @@
 
     <div id="shareModal">
         <div class="share-content">
-            <h3 style="margin-bottom:15px; color:#1e293b;">Share Profile</h3>
-            <div id="qrcode" style="display:flex; flex-direction:column; align-items:center; margin-bottom:15px;"></div>
-            <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px;">
-                <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none;">
-                <button class="copy-btn" onclick="copyLink()" style="background:#1e293b; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Copy</button>
+            <h3 style="margin-bottom:15px; color:#1e293b;">Profile QR Code (HD)</h3>
+            <div id="qrcode"></div>
+            <div class="copy-link-box" style="display:flex; background:#f1f5f9; padding:6px; border-radius:10px; margin-top: 15px; border: 1px solid #e2e8f0;">
+                <input type="text" id="shareLinkInput" readonly style="border:none; background:transparent; width:100%; padding:5px; font-size:12px; outline:none; color:#475569;">
+                <button class="copy-btn" onclick="copyLink()" style="background:#1e293b; color:#fff; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:600;">Copy</button>
             </div>
             <button onclick="closeShare()" style="margin-top:20px; border:none; background:none; color:#64748b; cursor:pointer; font-weight:600;">Close</button>
         </div>
@@ -320,6 +516,16 @@
 
     <script src="assets/js/main.js"></script>
     <script>
+        // Toggle mobile navbar menu
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+
         let currentMembers = [];
 
         function fetchMembers(file, btn) {
@@ -328,7 +534,7 @@
                 btn.classList.add('active');
             }
             const list = document.getElementById('memberList');
-            list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px;">লোড হচ্ছে...</p>`;
+            list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px;">Loading...</p>`;
 
             return fetch(file)
             .then(response => response.json())
@@ -369,33 +575,33 @@
                 <p style="color:#dc2626; font-weight:700; margin-bottom:20px;">${m.designation}</p>
                 
                 <div class="info-grid">
-                    <div class="info-card"><label>সংগঠনের আইডি নম্বর</label><span><i class="fas fa-fingerprint"></i> ${m.id}</span></div>
-                    <div class="info-card"><label>রক্তের গ্রুপ</label><span><i class="fas fa-tint" style="color:#ef4444;"></i> ${m.bloodGroup}</span></div>
-                    <div class="info-card"><label>ফোন নম্বর</label><span><i class="fas fa-phone"></i> ${m.phone || 'N/A'}</span></div>
-                    <div class="info-card"><label>যোগদানের তারিখ</label><span><i class="fas fa-calendar-alt"></i> ${m.joiningDate || 'N/A'}</span></div>
+                    <div class="info-card"><label>Organization ID</label><span><i class="fas fa-fingerprint"></i> ${m.id}</span></div>
+                    <div class="info-card"><label>Blood Group</label><span><i class="fas fa-tint" style="color:#ef4444;"></i> ${m.bloodGroup}</span></div>
+                    <div class="info-card"><label>Phone Number</label><span><i class="fas fa-phone"></i> ${m.phone || 'N/A'}</span></div>
+                    <div class="info-card"><label>Joining Date</label><span><i class="fas fa-calendar-alt"></i> ${m.joiningDate || 'N/A'}</span></div>
                 </div>
 
                 <div class="info-grid" style="margin-top:15px;">
-                    <div class="info-card"><label>ইমেইল এড্রেস</label><span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span></div>
-                    <div class="info-card"><label>পেশাগত পরিচয়</label><span><i class="fas fa-briefcase"></i> ${m.profession || 'N/A'}</span></div>
+                    <div class="info-card"><label>Email Address</label><span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span></div>
+                    <div class="info-card"><label>Profession</label><span><i class="fas fa-briefcase"></i> ${m.profession || 'N/A'}</span></div>
                 </div>
 
                 <div class="detail-box">
                     <h4 style="margin:0 0 10px; color:#991b1b;"><i class="fas fa-laptop-code"></i> Skills</h4>
-                    <p style="font-size:14px; color:#475569; margin:0;">${m.skills || 'কোনো স্কিল যুক্ত করা হয়নি।'}</p>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.skills || 'No skills added yet.'}</p>
                 </div>
 
                 <div class="detail-box achievement-box">
-                    <h4 style="margin:0 0 10px; color:#b45309;"><i class="fas fa-award"></i> অর্জিত সাফল্য (Achievements)</h4>
-                    <p style="font-size:14px; color:#475569; margin:0;">${m.achievements || 'এখনো কোনো অর্জন যুক্ত করা হয়নি।'}</p>
+                    <h4 style="margin:0 0 10px; color:#b45309;"><i class="fas fa-award"></i> Achievements</h4>
+                    <p style="font-size:14px; color:#475569; margin:0;">${m.achievements || 'No achievements added yet.'}</p>
                 </div>
 
                 <div class="detail-box">
-                    <h4 style="margin:0 0 10px; color:#991b1b;"><i class="fas fa-user-tag"></i> সংক্ষিপ্ত বায়ো</h4>
-                    <p style="font-size:14px; color:#475569; line-height:1.6; margin:0;">${m.bio || 'সদস্য সম্পর্কে তথ্য নেই।'}</p>
+                    <h4 style="margin:0 0 10px; color:#991b1b;"><i class="fas fa-user-tag"></i> Short Bio</h4>
+                    <p style="font-size:14px; color:#475569; line-height:1.6; margin:0;">${m.bio || 'Member information not available.'}</p>
                 </div>
 
-                <button class="download-btn" onclick="alert('Digital ID Card generate হচ্ছে...')">
+                <button class="download-btn" onclick="alert('Digital ID Card is being generated...')">
                     <i class="fas fa-id-card"></i> DOWNLOAD IDENTITY CARD
                 </button>
             `;
@@ -419,41 +625,58 @@
             document.getElementById('shareLinkInput').value = shareUrl;
             
             const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = "";
+            qrContainer.innerHTML = ""; 
             
-            new QRCode(qrContainer, { 
-                text: shareUrl, 
-                width: 140, 
-                height: 140,
-                correctLevel : QRCode.CorrectLevel.H 
-            });
-
-            setTimeout(() => {
-                const canvas = qrContainer.querySelector('canvas');
-                if (canvas) {
-                    const qrImageUrl = canvas.toDataURL("image/png");
-                    
-                    const existingBtn = qrContainer.querySelector('.qr-download-link');
-                    if(existingBtn) existingBtn.remove();
+            new QRCode(qrContainer, {
+                text: shareUrl,
+                width: 1000, 
+                height: 1000,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H,
+                drawer: 'canvas', 
+                logo: "assets/images/logo.png", 
+                logoWidth: 250, 
+                logoHeight: 250,
+                logoBackgroundColor: '#ffffff',
+                logoBackgroundTransparent: false,
+                onRenderingEnd: function(options, dataURL) {
+                    const oldBtn = document.querySelector('.qr-download-link');
+                    if(oldBtn) oldBtn.remove();
 
                     const downloadLink = document.createElement('a');
-                    downloadLink.href = qrImageUrl;
-                    downloadLink.download = `ACMO_Member_${id}_QR.png`;
-                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download QR Image';
+                    downloadLink.href = dataURL;
+                    downloadLink.download = `ACMO_Member_${id}_QR_HD.png`;
+                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download HD QR';
                     downloadLink.className = 'qr-download-link';
-                    qrContainer.appendChild(downloadLink);
+                    
+                    const closeBtn = document.querySelector('#shareModal .share-content button[onclick="closeShare()"]');
+                    closeBtn.parentNode.insertBefore(downloadLink, closeBtn);
                 }
-            }, 300);
+            });
         }
 
         function copyLink() {
             const input = document.getElementById('shareLinkInput');
             input.select();
+            input.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(input.value);
-            alert("Link Copied!");
+            
+            const copyBtn = document.querySelector('.copy-btn');
+            copyBtn.innerHTML = "Copied!";
+            copyBtn.style.background = "#059669";
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = "Copy";
+                copyBtn.style.background = "#1e293b";
+            }, 2000);
         }
 
-        function closeShare() { document.getElementById('shareModal').style.display = "none"; }
+        function closeShare() { 
+            document.getElementById('shareModal').style.display = "none";
+            const oldBtn = document.querySelector('.qr-download-link');
+            if(oldBtn) oldBtn.remove();
+        }
 
         window.onload = () => {
             const urlParams = new URLSearchParams(window.location.search);
