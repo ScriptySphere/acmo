@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ACMO-ADV-001",
+    "name": "Dr. Atiqul Haq Mazumder",
+    "designation": "Advisor",
+    "bloodGroup": "N/A",
+    "location": "Finland / Bangladesh",
+    "photo": "assets/images/members/atiqul_haq.jpg",
+    "phone": "+8801710423049",
+    "email": "atiqul.mazumder@oulu.fi",
+    "joiningDate": "06 Jun 2026",
+    "profession": "Physician & Medical Scientist",
+    "skills": "Psychiatry, Clinical Research, Public Health",
+    "achievements": "Postdoctoral Researcher (University of Oulu), Founder of Thikana",
+    "bio": "Dr. Atiqul Haq Mazumder is a psychiatrist and researcher serving as Postdoctoral Researcher at University of Oulu, Finland and Honorary Assoc. Professor at NIMH, Bangladesh."
+  },
+  {
+    "id": "ACMO-ADV-002",
+    "name": "Toru Shahriar Shorgo",
+    "designation": "Advisor",
+    "bloodGroup": "N/A",
+    "location": "Dhaka, Bangladesh",
+    "photo": "assets/images/members/toru_shahriar.jpg",
+    "phone": "N/A",
+    "email": "toru.Bangla@gmail.com",
+    "joiningDate": "20 Jun 2026",
+    "profession": "Development Worker & Academic",
+    "skills": "Research, Project Management, Public Speaking",
+    "achievements": "Faculty (DIU), Adjunct Faculty (ULAB), Co-founder & Executive Director (Creative Cultura)",
+    "bio": "Toru Shahriar Shorgo is an academic and development worker. He serves as Faculty at DIU and ULAB, and leads Creative Cultura in promoting language & youth development."
+  },
+  {
+    "id": "ACMO-ADV-003",
+    "name": "A.K.M Moshiur Rahman",
+    "designation": "Advisor",
+    "bloodGroup": "N/A",
+    "location": "Bangladesh",
+    "photo": "assets/images/members/moshiur_rahman.jpg",
+    "phone": "+8801711993593",
+    "email": "akmmoshiurrahman81@gmail.com",
+    "joiningDate": "04 Jul 2026",
+    "profession": "Director, Finance & Accounts (TUCA)",
+    "skills": "Financial Management, Strategic Planning, Risk Management",
+    "achievements": "19+ years in banking & finance, Director of Finance & Accounts at TUCA",
+    "bio": "A.K.M. Moshiur Rahman is a seasoned finance professional with over 19 years of expertise in banking and educational financial leadership, currently serving at TUCA."
+  },
+  {
+    "id": "ACMO-ADV-004",
+    "name": "Dr. Sakia Haque",
+    "designation": "Advisor",
+    "bloodGroup": "N/A",
+    "location": "Bagerhat, Bangladesh",
+    "photo": "assets/images/members/sakia_haque.jpg",
+    "phone": "N/A",
+    "email": "drsakiahaque@gmail.com",
+    "joiningDate": "28 Jun 2026",
+    "profession": "Assistant Registrar, BCS (Health)",
+    "skills": "Public Health, Healthcare Management, Community Health",
+    "achievements": "BCS (Health) Cadre Officer, Assistant Registrar at 250-Bedded District Hospital Bagerhat",
+    "bio": "Dr. Sakia Haque is a BCS Health officer serving at Bagerhat District Hospital, providing healthcare expertise and guidance to social and health awareness initiatives."
+  }
+]
