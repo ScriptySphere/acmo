@@ -239,23 +239,6 @@
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
         }
-
-        .qr-download-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: #dc2626;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            border: 2px solid #dc2626;
-            padding: 8px 20px;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-        .qr-download-link:hover {
-            background: #dc2626;
-            color: #fff;
-        }
     </style>
 </head>
 <body>
@@ -382,19 +365,11 @@
     <script src="assets/js/main.js"></script>
     <script>
         let currentMembers = [];
-        const memberFiles = [
-            'advisory_members.json',
-            'founder_members.json',
-            'central_members.json',
-            'department_members.json',
-            'district_members.json',
-            'changemaker_members.json'
-        ];
 
-        // District button fallback function
-        function districtFetch(file, btn) {
-            fetchMembers(file, btn);
-        }
+        // পেজ লোড হবার সাথে সাথে ডিফল্ট Central Members লোড হবে
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchMembers('central_members.json');
+        });
 
         function fetchMembers(file, btn) {
             if(btn) {
@@ -446,7 +421,7 @@
                 return data;
             })
             .catch(err => {
-                list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px; color:#ef4444;">Unable to load data (${file}). Make sure file exists and is running via VS Code Live Server.</p>`;
+                list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px; color:#ef4444;">Unable to load data (${file}). Make sure file exists and is running via Live Server.</p>`;
                 console.error(err);
             });
         }
@@ -513,4 +488,24 @@
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = ""; 
 
-        
+            // QR Code জেনারেট করা
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(qrContainer, {
+                    text: shareUrl,
+                    width: 180,
+                    height: 180,
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+        }
+
+        function closeShare() {
+            document.getElementById('shareModal').style.display = "none";
+        }
+
+        function copyLink() {
+            const copyText = document.getElementById("shareLinkInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+      
