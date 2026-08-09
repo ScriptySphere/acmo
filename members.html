@@ -226,7 +226,6 @@
             height: 200px;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             margin: 0 auto;
@@ -236,8 +235,6 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
         }
 
         .qr-download-link {
@@ -301,22 +298,22 @@
     </section>
 
     <div class="board-icons">
-        <div class="icon-btn" data-file="advisory_members.json" onclick="fetchMembers('advisory_members.json', this)">
+        <div class="icon-btn" onclick="fetchMembers('advisory_members.json', this)">
             <i class="fas fa-user-tie"></i><p>Advisory</p>
         </div>
-        <div class="icon-btn" data-file="founder_members.json" onclick="fetchMembers('founder_members.json', this)">
+        <div class="icon-btn" onclick="fetchMembers('founder_members.json', this)">
             <i class="fas fa-crown"></i><p>Founder</p>
         </div>
-        <div class="icon-btn active" data-file="central_members.json" onclick="fetchMembers('central_members.json', this)">
+        <div class="icon-btn active" onclick="fetchMembers('central_members.json', this)">
             <i class="fas fa-shield-halved"></i><p>Central Board</p>
         </div>
-        <div class="icon-btn" data-file="department_members.json" onclick="fetchMembers('department_members.json', this)">
+        <div class="icon-btn" onclick="fetchMembers('department_members.json', this)">
             <i class="fas fa-sitemap"></i><p>Department</p>
         </div>
-        <div class="icon-btn" data-file="district_members.json" onclick="fetchMembers('district_members.json', this)">
+        <div class="icon-btn" onclick="districtFetch('district_members.json', this)">
             <i class="fas fa-city"></i><p>District</p>
         </div>
-        <div class="icon-btn" data-file="changemaker_members.json" onclick="fetchMembers('changemaker_members.json', this)">
+        <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)">
             <i class="fas fa-bolt"></i><p>Changemaker</p>
         </div>
     </div>
@@ -351,7 +348,7 @@
                         <img src="assets/images/logo.png" alt="ACMO Logo">
                         <span>ACMO</span>
                     </div>
-                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্তFutures এর পথচলা</p>
+                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
                     <div class="social-links">
                         <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
                         <a href="mailto:acmou.18@gmail.com">📧</a>
@@ -382,42 +379,20 @@
     <script src="assets/js/main.js"></script>
     <script>
         let currentMembers = [];
-        const memberFiles = [
-            'advisory_members.json',
-            'founder_members.json',
-            'central_members.json',
-            'department_members.json',
-            'district_members.json',
-            'changemaker_members.json'
-        ];
 
         function fetchMembers(file, btn) {
             if(btn) {
                 document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
                 btn.classList.add('active');
-            } else {
-                const targetBtn = document.querySelector(`.icon-btn[data-file="${file}"]`);
-                if(targetBtn) {
-                    document.querySelectorAll('.icon-btn').forEach(i => i.classList.remove('active'));
-                    targetBtn.classList.add('active');
-                }
             }
-
             const list = document.getElementById('memberList');
             list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px;">Loading...</p>`;
 
             return fetch(file)
-            .then(response => {
-                if(!response.ok) throw new Error("File not found");
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 currentMembers = data;
                 list.innerHTML = "";
-                if(data.length === 0) {
-                    list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px;">No members found.</p>`;
-                    return [];
-                }
                 data.forEach((m, index) => {
                     list.innerHTML += `
                         <div class="member-card">
@@ -439,18 +414,13 @@
                     `;
                 });
                 return data;
-            })
-            .catch(err => {
-                list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px; color:#ef4444;">Unable to load data. Make sure JSON file exists.</p>`;
-                console.error(err);
             });
         }
 
         function openModal(index) {
             const m = currentMembers[index];
-            if(!m) return;
-
             const modalData = document.getElementById('modalData');
+            
             modalData.innerHTML = `
                 <img src="${m.photo}" class="modal-photo" onerror="this.src='assets/images/logo.png'">
                 <h2 style="margin: 15px 0 5px; font-size: 24px; color:#1e293b;">${m.name}</h2>
@@ -494,10 +464,11 @@
         function closeModal() {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('id')) {
-                window.history.replaceState({}, document.title, window.location.pathname);
+                window.location.href = window.location.pathname; 
+            } else {
+                document.getElementById('memberModal').style.display = "none";
+                document.body.style.overflow = "auto";
             }
-            document.getElementById('memberModal').style.display = "none";
-            document.body.style.overflow = "auto";
         }
 
         function openShare(id) {
@@ -510,7 +481,29 @@
             
             new QRCode(qrContainer, {
                 text: shareUrl,
-                width: 1200, 
-                height: 1200,
+                width: 1000, 
+                height: 1000,
                 colorDark: "#000000",
-             
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H,
+                drawer: 'canvas', 
+                logo: "assets/images/logo.png", 
+                logoWidth: 250, 
+                logoHeight: 250,
+                logoBackgroundColor: '#ffffff',
+                logoBackgroundTransparent: false,
+                onRenderingEnd: function(options, dataURL) {
+                    const oldBtn = document.querySelector('.qr-download-link');
+                    if(oldBtn) oldBtn.remove();
+
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = dataURL;
+                    downloadLink.download = `ACMO_Member_${id}_QR_HD.png`;
+                    downloadLink.innerHTML = '<i class="fas fa-download"></i> Download HD QR';
+                    downloadLink.className = 'qr-download-link';
+                    qrContainer.appendChild(downloadLink);
+                }
+            });
+        }
+
+        function clos
