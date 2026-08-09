@@ -257,11 +257,9 @@
 </head>
 <body>
     
-    <!-- Navigation Header -->
     <header class="site-header">
         <nav class="navbar">
             <div class="nav-container">
-                <!-- Logo Section -->
                 <a href="index.html" class="nav-logo">
                     <img src="assets/images/logo.png" alt="ACMO Logo" class="logo">
                     <div class="logo-details">
@@ -270,7 +268,6 @@
                     </div>
                 </a>
 
-                <!-- Navigation Links -->
                 <div class="nav-menu" id="nav-menu">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="about.html" class="nav-link">About</a>
@@ -282,7 +279,6 @@
                     <a href="acmo18.org/joinacmo" class="nav-btn">Join Us</a>
                 </div>
 
-                <!-- Hamburger Menu for Mobile -->
                 <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -302,13 +298,24 @@
     </section>
 
     <div class="board-icons">
+        <div class="icon-btn" onclick="fetchMembers('advisory_members.json', this)">
+            <i class="fas fa-user-tie"></i><p>Advisory</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('founder_members.json', this)">
+            <i class="fas fa-crown"></i><p>Founder</p>
+        </div>
         <div class="icon-btn active" onclick="fetchMembers('central_members.json', this)">
             <i class="fas fa-shield-halved"></i><p>Central Board</p>
         </div>
-        <div class="icon-btn" onclick="fetchMembers('divisional_members.json', this)"><i class="fas fa-map-location-dot"></i><p>Divisional</p></div>
-        <div class="icon-btn" onclick="districtFetch('district_members.json', this)"><i class="fas fa-city"></i><p>District</p></div>
-        <div class="icon-btn" onclick="fetchMembers('upazila_members.json', this)"><i class="fas fa-building"></i><p>Upazila</p></div>
-        <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)"><i class="fas fa-bolt"></i><p>Changemaker</p></div>
+        <div class="icon-btn" onclick="fetchMembers('department_members.json', this)">
+            <i class="fas fa-sitemap"></i><p>Department</p>
+        </div>
+        <div class="icon-btn" onclick="districtFetch('district_members.json', this)">
+            <i class="fas fa-city"></i><p>District</p>
+        </div>
+        <div class="icon-btn" onclick="fetchMembers('changemaker_members.json', this)">
+            <i class="fas fa-bolt"></i><p>Changemaker</p>
+        </div>
     </div>
 
     <div id="memberList" class="member-grid"></div>
@@ -333,7 +340,6 @@
         </div>
     </div>
 
-    <!-- Updated Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -365,10 +371,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 ScriptySphere. All rights reserved. Made with ❤️ by <b> <a href="https://www.scriptysphere.org" 
-           style="color: white;" 
-           onmouseover="this.style.color='lightblue';" 
-           onmouseout="this.style.color='white';">ScriptySphere.</a></b></p>
+                <p>&copy; 2026 ACMO. All rights reserved. Made with ❤️ by <b> <span style="color: white;">Design By Mamun</span></b></p>
             </div>
         </div>
     </footer>
@@ -498,48 +501,25 @@
                     downloadLink.download = `ACMO_Member_${id}_QR_HD.png`;
                     downloadLink.innerHTML = '<i class="fas fa-download"></i> Download HD QR';
                     downloadLink.className = 'qr-download-link';
-                    
-                    const closeBtn = document.querySelector('#shareModal .share-content button[onclick="closeShare()"]');
-                    closeBtn.parentNode.insertBefore(downloadLink, closeBtn);
+                    qrContainer.appendChild(downloadLink);
                 }
             });
+        }
+
+        function closeShare() {
+            document.getElementById('shareModal').style.display = "none";
         }
 
         function copyLink() {
-            const input = document.getElementById('shareLinkInput');
-            input.select();
-            input.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(input.value);
-            
-            const copyBtn = document.querySelector('.copy-btn');
-            copyBtn.innerHTML = "Copied!";
-            copyBtn.style.background = "#059669";
-            
-            setTimeout(() => {
-                copyBtn.innerHTML = "Copy";
-                copyBtn.style.background = "#1e293b";
-            }, 2000);
+            const shareInput = document.getElementById('shareLinkInput');
+            shareInput.select();
+            document.execCommand('copy');
+            alert('Link copied to clipboard!');
         }
 
-        function closeShare() { 
-            document.getElementById('shareModal').style.display = "none";
-            const oldBtn = document.querySelector('.qr-download-link');
-            if(oldBtn) oldBtn.remove();
-        }
-
-        window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const memberId = urlParams.get('id');
-
-            fetchMembers('central_members.json', document.querySelector('.icon-btn'))
-            .then(data => {
-                if (memberId) {
-                    const index = data.findIndex(m => m.id === memberId);
-                    if (index !== -1) {
-                        openModal(index);
-                    }
-                }
-            });
+        // Default Load Central Members
+        window.onload = function() {
+            fetchMembers('central_members.json');
         };
     </script>
 </body>
