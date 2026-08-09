@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ACMO-133220001",
+    "name": "Redwan Ahmed",
+    "designation": "Founder & Advisor",
+    "bloodGroup": "N/A",
+    "location": "Sylhet, Moulvibazar",
+    "photo": "assets/images/members/2001.jpg",
+    "phone": "N/A",
+    "email": "N/A",
+    "joiningDate": "N/A",
+    "profession": "N/A",
+    "skills": "N/A",
+    "achievements": "Founder & Advisor of ACMO",
+    "bio": "Redwan Ahmed is a Founder & Advisor at Anti Child Marriage Organization (ACMO)."
+  },
+  {
+    "id": "ACMO-133220002",
+    "name": "Abdullah Al Mahin",
+    "designation": "Permanent Councillor & Advisor",
+    "bloodGroup": "N/A",
+    "location": "Sylhet, Moulvibazar",
+    "photo": "assets/images/members/2002.jpeg",
+    "phone": "N/A",
+    "email": "N/A",
+    "joiningDate": "N/A",
+    "profession": "N/A",
+    "skills": "N/A",
+    "achievements": "Permanent Councillor & Advisor of ACMO",
+    "bio": "Abdullah Al Mahin serves as a Permanent Councillor & Advisor at Anti Child Marriage Organization (ACMO)."
+  }
+]
