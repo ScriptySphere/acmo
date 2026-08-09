@@ -313,7 +313,7 @@
         <div class="icon-btn" data-file="department_members.json" onclick="fetchMembers('department_members.json', this)">
             <i class="fas fa-sitemap"></i><p>Department</p>
         </div>
-        <div class="icon-btn" data-file="district_members.json" onclick="districtFetch('district_members.json', this)">
+        <div class="icon-btn" data-file="district_members.json" onclick="fetchMembers('district_members.json', this)">
             <i class="fas fa-city"></i><p>District</p>
         </div>
         <div class="icon-btn" data-file="changemaker_members.json" onclick="fetchMembers('changemaker_members.json', this)">
@@ -351,7 +351,7 @@
                         <img src="assets/images/logo.png" alt="ACMO Logo">
                         <span>ACMO</span>
                     </div>
-                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের পথচলা</p>
+                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্তFutures এর পথচলা</p>
                     <div class="social-links">
                         <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
                         <a href="mailto:acmou.18@gmail.com">📧</a>
@@ -407,10 +407,17 @@
             list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px;">Loading...</p>`;
 
             return fetch(file)
-            .then(response => response.json())
+            .then(response => {
+                if(!response.ok) throw new Error("File not found");
+                return response.json();
+            })
             .then(data => {
                 currentMembers = data;
                 list.innerHTML = "";
+                if(data.length === 0) {
+                    list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px;">No members found.</p>`;
+                    return [];
+                }
                 data.forEach((m, index) => {
                     list.innerHTML += `
                         <div class="member-card">
@@ -432,6 +439,10 @@
                     `;
                 });
                 return data;
+            })
+            .catch(err => {
+                list.innerHTML = `<p style="text-align:center; grid-column:1/-1; padding:50px; color:#ef4444;">Unable to load data. Make sure JSON file exists.</p>`;
+                console.error(err);
             });
         }
 
@@ -497,20 +508,9 @@
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = ""; 
             
-            // Ultra HD Quality QR Code Generation
             new QRCode(qrContainer, {
                 text: shareUrl,
                 width: 1200, 
                 height: 1200,
                 colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H,
-                drawer: 'canvas', 
-                logo: "assets/images/logo.png", 
-                logoWidth: 300, 
-                logoHeight: 300,
-                logoBackgroundColor: '#ffffff',
-                logoBackgroundTransparent: false,
-                onRenderingEnd: function(options, dataURL) {
-                    const oldBtn = document.querySelector('.qr-download-link');
-                    if(oldBtn) oldBtn.remove()
+             
