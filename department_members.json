@@ -1,7 +1,7 @@
 [
   {
     "id": "ACMO-IMD-001",
-    "name": "Md. Ebnul Hossen Rahat",
+    "name": "",
     "designation": "Central Director | Head, IMD",
     "bloodGroup": "N/A",
     "location": "Bangladesh",
@@ -35,12 +35,12 @@
     "id": "ACMO-IMD-003",
     "name": "Abdullah Al Mamun",
     "designation": "Central Director | Member, IMD",
-    "bloodGroup": "N/A",
+    "bloodGroup": "O+",
     "location": "Bangladesh",
     "photo": "assets/images/members/abdullah_mamun.jpg",
     "department": "IT & Media Department",
-    "phone": "N/A",
-    "email": "N/A",
+    "phone": "01885-12300",
+    "email": "****@gmail.com",
     "joiningDate": "N/A",
     "profession": "Central Director",
     "skills": "Web Development, UI/UX Design, IT Support",
@@ -81,7 +81,7 @@
   },
   {
     "id": "ACMO-AAD-002",
-    "name": "Md. M. Hassan Sarker",
+    "name": "Md. Mahmud Hassan Sarker",
     "designation": "Central Director | Member, AAD",
     "bloodGroup": "N/A",
     "location": "Bangladesh",
