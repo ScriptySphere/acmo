@@ -348,7 +348,7 @@
                         <img src="assets/images/logo.png" alt="ACMO Logo">
                         <span>ACMO</span>
                     </div>
-                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্ত ভবিষ্যতের এর পথচলা</p>
+                    <p>সচেতনতার দীপ্তিতে বাল্যবিবাহমুক্তFutures এর পথচলা</p>
                     <div class="social-links">
                         <a href="https://facebook.com/acmou.18" target="_blank">📘</a>
                         <a href="mailto:acmou.18@gmail.com">📧</a>
@@ -433,9 +433,14 @@
                     <div class="info-card"><label>Joining Date</label><span><i class="fas fa-calendar-alt"></i> ${m.joiningDate || 'N/A'}</span></div>
                 </div>
 
-                <div class="info-grid" style="margin-top:15px;">
-                    <div class="info-card"><label>Email Address</label><span><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span></div>
-                    <div class="info-card"><label>Profession</label><span><i class="fas fa-briefcase"></i> ${m.profession || 'N/A'}</span></div>
+                <div class="detail-box">
+                    <label style="display:block; font-size:10px; color:#94a3b8; text-transform:uppercase; font-weight:800; margin-bottom:4px;">Email Address</label>
+                    <span style="font-size:14px; color:#1e293b; font-weight:600; display:flex; align-items:center; gap:8px;"><i class="fas fa-envelope" style="color:#dc2626;"></i> ${m.email || 'N/A'}</span>
+                </div>
+
+                <div class="detail-box">
+                    <label style="display:block; font-size:10px; color:#94a3b8; text-transform:uppercase; font-weight:800; margin-bottom:4px;">Profession</label>
+                    <span style="font-size:14px; color:#1e293b; font-weight:600; display:flex; align-items:center; gap:8px;"><i class="fas fa-briefcase" style="color:#dc2626;"></i> ${m.profession || 'N/A'}</span>
                 </div>
 
                 <div class="detail-box">
@@ -524,4 +529,3 @@
     </script>
 </body>
 </html>
-
