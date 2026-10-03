@@ -5,32 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Deactivated</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #1e2430 0%, #0d1117 100%);
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .card-container {
+            background: linear-gradient(145deg, rgba(35, 43, 56, 0.8), rgba(20, 26, 36, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px 40px;
+            max-width: 480px;
+            width: 90%;
             text-align: center;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            animation: float 6s ease-in-out infinite;
         }
-        .container {
-            border: 1px solid #333;
-            padding: 40px;
-            border-radius: 10px;
-            background-color: #242424;
-            max-width: 500px;
+
+        .card-container:hover {
+            transform: translateY(-10px) rotateX(4deg) rotateY(-2deg);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(255, 77, 77, 0.2);
         }
-        h1 { color: #ff4d4d; }
-        p { color: #ccc; font-size: 18px; line-height: 1.5; }
+
+        .logo-wrapper {
+            margin-bottom: 25px;
+            transform: translateZ(30px);
+        }
+
+        .logo {
+            max-width: 120px;
+            height: auto;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+        }
+
+        h1 {
+            color: #ff4d4d;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+            text-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+            transform: translateZ(25px);
+        }
+
+        p {
+            color: #b0b8c4;
+            font-size: 16px;
+            line-height: 1.6;
+            transform: translateZ(20px);
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 6px 16px;
+            background: rgba(255, 77, 77, 0.1);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            border-radius: 20px;
+            color: #ff6b6b;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: translateZ(15px);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-12px) rotateX(2deg);
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <div class="card-container">
+        <div class="logo-wrapper">
+            <img src="assets/images/logo.png" alt="Logo" class="logo">
+        </div>
         <h1>Notice: Website Deactivated</h1>
-        <p>Ei website-ti samoyik vabe sthogit kora hoyeche.</p>
+        <p>এই ওয়েবসাইটটি সাময়িকভাবে স্থগিত করা হয়েছে।</p>
+        <div class="badge">Status: Inactive</div>
     </div>
+
 </body>
 </html>
